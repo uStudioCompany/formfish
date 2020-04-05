@@ -72,6 +72,12 @@ but with `error` field in each place you want the error to pop up.
 After that, the state of errors gets merged with the form state and you
 can access and handle them freely.
 
+## `useForm`
+
+To grab the state of your form from inside of it, use our `useForm` hook.
+It gives you whole form state and a `watch` method to look closer at the
+certain input with a provided `path` argument.
+
 ## Contributing
 
 If you are willing to become a contributor to this project or just have

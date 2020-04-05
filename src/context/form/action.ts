@@ -1,24 +1,18 @@
 import { ErrorState, Input } from './FormContext';
 
-export enum FormActionType {
-  Register = 'register',
-  Ungerister = 'unregister',
-  SetError = 'set_error'
-}
-
 export type FormAction = Register | Unregister | SetError;
 
 interface Register {
-  type: FormActionType.Register;
+  type: 'register';
   payload: Input;
 }
 
 interface Unregister {
-  type: FormActionType.Ungerister;
-  payload: { path: string };
+  type: 'unregister';
+  payload: string;
 }
 
 interface SetError {
-  type: FormActionType.SetError;
+  type: 'set_error';
   payload: ErrorState;
 }
