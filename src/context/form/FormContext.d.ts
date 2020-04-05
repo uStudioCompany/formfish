@@ -1,6 +1,6 @@
 export interface FormDispatchContextValue {
   validate(errorState: ErrorState): void;
-  register({ ...input }: Input): void;
+  register(input: Input): void;
   unregister({ path }: Path): void;
 }
 
@@ -29,7 +29,7 @@ export type FormState = FieldSet;
 
 export type FormMember = Field | FieldSet | FieldArray;
 
-export interface Input<V extends unknown = unknown, P extends {} = {}> extends P {
+export interface Input<V = unknown, P = {}> extends P {
   path: string;
   value: V;
   name: string;

@@ -10,15 +10,14 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   children: fields,
   name,
   index,
-  direction = 'row',
   isDisabled = false,
   className = ''
 }) => {
   const { path } = usePath();
 
   return (
-    <Style.Wrapper disabled={isDisabled} className={className}>
-      <Style.FieldSet dataDirection={direction}>
+    <Style.Wrapper disabled={isDisabled}>
+      <Style.FieldSet className={className}>
         <legend>{name}</legend>
 
         <PathContext.Provider
@@ -37,13 +36,11 @@ FieldSet.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
   name: PropTypes.string.isRequired,
   index: PropTypes.number,
-  direction: PropTypes.oneOf(['row', 'column']),
   isDisabled: PropTypes.bool,
   className: PropTypes.string
 };
 
 FieldSet.defaultProps = {
-  direction: 'row',
   isDisabled: false,
   className: ''
 };

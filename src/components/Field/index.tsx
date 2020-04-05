@@ -25,7 +25,7 @@ const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, index 
 
   return cloneElement(input, {
     value: watch({ path: fieldPath })?.value,
-    onChange: (value?: unknown) => register({ path: fieldPath, value, name, ...input.props })
+    onChange: (value?: unknown) => register({ path: fieldPath, value, name })
   });
 };
 
