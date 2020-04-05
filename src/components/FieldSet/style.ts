@@ -19,6 +19,4 @@ const FieldSet = styled.div(
   `
 );
 
-const Styled = { Wrapper, FieldSet };
-
-export default Styled;
+export default { Wrapper, FieldSet };

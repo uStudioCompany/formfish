@@ -6,6 +6,4 @@ const Form = styled.form`
   grid-row-gap: 1rem;
 `;
 
-const Styled = { Form };
-
-export default Styled;
+export default { Form };

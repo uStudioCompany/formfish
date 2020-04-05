@@ -3,6 +3,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
+    "lib": ["esnext"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",

@@ -11,7 +11,7 @@ import createFieldName from './create-field-name';
  * @return Returns a path with either an array index or dot-notation property
  * at the end of a string
  */
-const createFieldPath = ({ path, name, index }: { path: string; name: string; index?: number }) => {
+const createFieldPath = ({ path, name, index }: { path: string; name: string; index?: number }): string => {
   return typeof index === 'number' ? `${path}[${index}]` : `${path}.${createFieldName(name)}`;
 };
 

@@ -1,5 +1,4 @@
-import { ErrorsState } from '../../utils/get-errors-state';
-import { Input } from './FormContext';
+import { ErrorState, Input } from './FormContext';
 
 export enum FormActionType {
   Register = 'register',
@@ -21,5 +20,5 @@ interface Unregister {
 
 interface SetError {
   type: FormActionType.SetError;
-  payload: ErrorsState;
+  payload: ErrorState;
 }

@@ -1,63 +1,63 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import { object } from 'yup';
-import FormContextProvider, { FormContext } from '../../context/form';
-import { PathContext } from '../../context/path';
+import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
+import { ErrorState, FormState } from '../../context/form/FormContext';
+import PathContext from '../../context/path';
 import { createFieldName } from '../../utils';
 import { FormProps } from './Form';
 
-import Styled from './styled';
+import Styled from './style';
 
-const Form: React.FC<InferProps<FormProps>> = ({
-  children: form,
-  name,
-  onSubmit,
-  schema,
-  className = ''
-}) => {
+const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit, onValidate, className = '' }) => {
+  const handleValidate = (state: FormState, validate: (errorState: ErrorState) => void): void => {
+    if (onValidate) {
+      try {
+        onValidate(state);
+      } catch (errorState) {
+        validate(errorState);
+      }
+    }
+  };
+
+  const handleSubmit = (
+    state: FormState,
+    validate: (errorState: ErrorState) => void
+  ): ((event: FormEvent<HTMLFormElement>) => void) => (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    handleValidate(state, validate);
+
+    onSubmit(state);
+  };
+
   return (
     <FormContextProvider>
-      <FormContext.Consumer>
-        {({ getState, validate }) => (
-          <Styled.Form
-            id={name}
-            className={className}
-            onSubmit={event => {
-              event.preventDefault();
-
-              if (schema) {
-                validate(
-                  object({
-                    [name]: object(schema)
-                  })
-                );
-              }
-
-              onSubmit(getState());
-            }}
-          >
-            <PathContext.Provider
-              value={{
-                path: createFieldName(name)
-              }}
-            >
-              {form}
-            </PathContext.Provider>
-          </Styled.Form>
+      <FormStateContext.Consumer>
+        {({ getState }) => (
+          <FormDispatchContext.Consumer>
+            {({ validate }) => (
+              <Styled.Form id={name} className={className} onSubmit={handleSubmit(getState(), validate)}>
+                <PathContext.Provider
+                  value={{
+                    path: createFieldName(name)
+                  }}
+                >
+                  {form}
+                </PathContext.Provider>
+              </Styled.Form>
+            )}
+          </FormDispatchContext.Consumer>
         )}
-      </FormContext.Consumer>
+      </FormStateContext.Consumer>
     </FormContextProvider>
   );
 };
 
 Form.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
   name: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  schema: PropTypes.object,
+  onValidate: PropTypes.func,
   className: PropTypes.string
 };
 

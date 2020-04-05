@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import { PathContext } from '../../context/path';
+
+import PathContext, { usePath } from '../../context/path';
 import { createFieldPath } from '../../utils';
 import { FieldSetProps } from './FieldSet';
-import Styled from './styled';
+import Style from './style';
 
 const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   children: fields,
@@ -13,11 +14,11 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   isDisabled = false,
   className = ''
 }) => {
-  const { path } = useContext(PathContext);
+  const { path } = usePath();
 
   return (
-    <Styled.Wrapper disabled={isDisabled}>
-      <Styled.FieldSet dataDirection={direction} className={className}>
+    <Style.Wrapper disabled={isDisabled} className={className}>
+      <Style.FieldSet dataDirection={direction}>
         <legend>{name}</legend>
 
         <PathContext.Provider
@@ -27,16 +28,13 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
         >
           {fields}
         </PathContext.Provider>
-      </Styled.FieldSet>
-    </Styled.Wrapper>
+      </Style.FieldSet>
+    </Style.Wrapper>
   );
 };
 
 FieldSet.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element
-  ]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
   name: PropTypes.string.isRequired,
   index: PropTypes.number,
   direction: PropTypes.oneOf(['row', 'column']),
