@@ -25,7 +25,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
-  "ignorePatterns": ["gatsby-*.js"],
+  "ignorePatterns": ["lib/**/*", "node_modules/**/*"],
   "rules": {
     "prettier/prettier": "warn",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
