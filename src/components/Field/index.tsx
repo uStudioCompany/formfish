@@ -6,7 +6,9 @@ import { usePath } from '../../context/path';
 import { createFieldPath } from '../../utils';
 import { FieldProps } from './Field';
 
-const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, index }) => {
+const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, index, getters }) => {
+  const { value = 'value', defaultValue = 'defaultValue', onChange = 'onChange' } = getters;
+
   const path = usePath();
   const { watch, dispatch } = useFormContext();
 
@@ -18,7 +20,7 @@ const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, index 
       payload: {
         name,
         path: fieldPath,
-        value: input.props?.defaultValue
+        value: input.props?.[defaultValue]
       }
     });
 
@@ -26,15 +28,29 @@ const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, index 
   }, []);
 
   return cloneElement(input, {
-    value: watch(fieldPath)?.value,
-    onChange: (value?: unknown) => dispatch({ type: 'register', payload: { path: fieldPath, value, name } })
+    [value]: watch(fieldPath)?.value,
+    [onChange]: (inputValue?: unknown) =>
+      dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } })
   });
 };
 
 Field.propTypes = {
   children: PropTypes.element.isRequired,
   name: PropTypes.string.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
+  getters: PropTypes.shape({
+    value: PropTypes.string,
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.string
+  })
+};
+
+Field.defaultProps = {
+  getters: {
+    value: 'value',
+    defaultValue: 'defaultValue',
+    onChange: 'onChange'
+  }
 };
 
 export default Field;
