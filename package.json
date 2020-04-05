@@ -1,16 +1,22 @@
 {
   "name": "form-engine",
+  "description": "React Context Form Engine",
   "version": "0.1.0",
+  "author": "uStudio Front-End Department",
+  "repository": "",
+  "license": "MIT",
+  "keywords": ["react", "form", "typescript"],
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "dev": "parcel test/index.html -p 1488 --no-cache",
     "clean": "rimraf lib",
+    "build:copy": "copyfiles README.md LICENSE package.json lib",
     "build:components": "babel src --out-dir lib --extensions .ts,.tsx --copy-files",
     "build:dts": "tsc -p tsconfig.json",
-    "build:package-json": "copyfiles package.json lib",
-    "build": "npm-run-all clean -p build:components build:dts build:package-json"
+    "build": "npm-run-all clean -p build:components build:dts build:copy",
+    "release": "standard-version",
+    "publication": "yarn publish lib"
   },
   "dependencies": {
     "copyfiles": "^2.2.0",
@@ -25,11 +31,11 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.merge": "^4.6.6",
     "@types/lodash.set": "^4.3.6",
@@ -52,6 +58,7 @@
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "standard-version": "^7.1.0",
     "styled-components": "^5.0.1",
     "typescript": "^3.8.3"
   },
@@ -62,6 +69,5 @@
   },
   "browserslist": [
     "last 1 Chrome versions"
-  ],
-  "license": "MIT"
+  ]
 }
