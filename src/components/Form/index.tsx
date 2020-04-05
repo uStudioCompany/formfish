@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
-import { ErrorState, FormState } from '../../context/form/FormContext';
+import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
 import { createFieldName } from '../../utils';
 import { FormProps } from './Form';
@@ -9,23 +9,25 @@ import { FormProps } from './Form';
 import Styled from './style';
 
 const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit, onValidate, className = '' }) => {
-  const handleValidate = (state: FormState, validate: (errorState: ErrorState) => void): void => {
+  const handleValidate = (state: FormState, dispatch: FormDispatchContextValue): void => {
     if (onValidate) {
       try {
         onValidate(state);
       } catch (errorState) {
-        validate(errorState);
+        dispatch({
+          type: 'set_error',
+          payload: errorState
+        });
       }
     }
   };
 
-  const handleSubmit = (
-    state: FormState,
-    validate: (errorState: ErrorState) => void
-  ): ((event: FormEvent<HTMLFormElement>) => void) => (event: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (state: FormState, dispatch: FormDispatchContextValue) => (
+    event: FormEvent<HTMLFormElement>
+  ): void => {
     event.preventDefault();
 
-    handleValidate(state, validate);
+    handleValidate(state, dispatch);
 
     onSubmit(state);
   };
@@ -33,17 +35,11 @@ const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit,
   return (
     <FormContextProvider>
       <FormStateContext.Consumer>
-        {({ getState }) => (
+        {({ state }: FormStateContextValue) => (
           <FormDispatchContext.Consumer>
-            {({ validate }) => (
-              <Styled.Form id={name} className={className} onSubmit={handleSubmit(getState(), validate)}>
-                <PathContext.Provider
-                  value={{
-                    path: createFieldName(name)
-                  }}
-                >
-                  {form}
-                </PathContext.Provider>
+            {(dispatch: FormDispatchContextValue) => (
+              <Styled.Form id={name} className={className} onSubmit={handleSubmit(state, dispatch)}>
+                <PathContext.Provider value={createFieldName(name)}>{form}</PathContext.Provider>
               </Styled.Form>
             )}
           </FormDispatchContext.Consumer>

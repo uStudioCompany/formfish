@@ -1,11 +1,11 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 
-interface PathContextValue {
-  path: string;
-}
+const PathContext = createContext('');
 
-const PathContext = createContext({} as PathContextValue);
+export const usePath = (): string => {
+  const pathFromContext = useContext(PathContext);
 
-export const usePath = (): PathContextValue => useContext(PathContext);
+  return useMemo(() => pathFromContext, [pathFromContext]);
+};
 
 export default PathContext;

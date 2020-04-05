@@ -2,21 +2,21 @@ import set from 'lodash.set';
 import unset from 'lodash.unset';
 import merge from 'lodash.merge';
 
-import { FormAction, FormActionType } from './action';
+import { FormAction } from './action';
 import { FormState } from './FormContext';
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
   switch (action.type) {
-    case FormActionType.Register: {
+    case 'register': {
       const { path, ...input } = action.payload;
       return { ...set(state, path, input) };
     }
-    case FormActionType.Ungerister: {
-      unset(state, action.payload.path);
+    case 'unregister': {
+      unset(state, action.payload);
 
       return state;
     }
-    case FormActionType.SetError: {
+    case 'set_error': {
       return merge({ ...state }, action.payload);
     }
     default: {

@@ -13,20 +13,14 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   isDisabled = false,
   className = ''
 }) => {
-  const { path } = usePath();
+  const path = usePath();
 
   return (
     <Style.Wrapper disabled={isDisabled}>
       <Style.FieldSet className={className}>
         <legend>{name}</legend>
 
-        <PathContext.Provider
-          value={{
-            path: createFieldPath({ path, name, index })
-          }}
-        >
-          {fields}
-        </PathContext.Provider>
+        <PathContext.Provider value={createFieldPath({ path, name, index })}>{fields}</PathContext.Provider>
       </Style.FieldSet>
     </Style.Wrapper>
   );

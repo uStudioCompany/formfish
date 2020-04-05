@@ -1,22 +1,17 @@
-export interface FormDispatchContextValue {
-  validate(errorState: ErrorState): void;
-  register(input: Input): void;
-  unregister({ path }: Path): void;
-}
+import { Dispatch } from 'react';
+import { FormAction } from './action';
+
+export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
-  getState(): FormState;
-  watch({ path }: Path): Field;
+  state: FormState;
+  watch(path: string): Field;
 }
 
 export interface Field {
   name: string;
   value: unknown | undefined;
   error?: string;
-}
-
-export interface Path {
-  path: string;
 }
 
 type FieldSet = {

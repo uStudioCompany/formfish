@@ -1,47 +1,26 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
-import { FormActionType } from './action';
-import { Field, FormStateContextValue, FormDispatchContextValue, FormState, Input, ErrorState } from './FormContext';
+import { Field, FormStateContextValue, FormDispatchContextValue, FormState } from './FormContext';
 import formReducer from './reducer';
 
-export const FormStateContext = createContext({} as FormStateContextValue);
-export const FormDispatchContext = createContext({} as FormDispatchContextValue);
+export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
+export const FormDispatchContext = createContext<FormDispatchContextValue | undefined>(undefined);
 
 const FormContextProvider: React.FC = ({ children }) => {
-  const [state, dispatch] = useReducer(formReducer, {});
+  const [formState, dispatch] = useReducer(formReducer, {});
 
-  const getState = (): FormState => state;
-
-  const validate = (errorState: ErrorState): void => {
-    dispatch({
-      type: FormActionType.SetError,
-      payload: errorState
-    });
-  };
-
-  const watch = ({ path }: { path: string }): Field => {
-    return get(state, path) as Field;
-  };
-
-  const register = ({ ...input }: Input): void => {
-    dispatch({
-      type: FormActionType.Register,
-      payload: input
-    });
-  };
-
-  const unregister = ({ path }: { path: string }): void => {
-    dispatch({
-      type: FormActionType.Ungerister,
-      payload: { path }
-    });
-  };
+  const { state } = useMemo<{ state: FormState }>(
+    () => ({
+      state: formState
+    }),
+    [formState]
+  );
 
   return (
-    <FormStateContext.Provider value={{ getState, watch }}>
-      <FormDispatchContext.Provider value={{ validate, register, unregister }}>{children}</FormDispatchContext.Provider>
+    <FormStateContext.Provider value={{ state, watch: (path: string): Field => get(state, path) as Field }}>
+      <FormDispatchContext.Provider value={dispatch}>{children}</FormDispatchContext.Provider>
     </FormStateContext.Provider>
   );
 };
@@ -50,8 +29,21 @@ FormContextProvider.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-export const useFormState = (): FormStateContextValue => useContext(FormStateContext);
+/**
+ * @internal
+ * This hook is used inside of our components to grab state and dispatch values
+ *
+ * @return Returns an object with state, watch and dispatch fields from our context
+ */
+export const useFormContext = (): FormStateContextValue & { dispatch: FormDispatchContextValue } => {
+  const state = useContext(FormStateContext);
+  const dispatch = useContext(FormDispatchContext);
 
-export const useFormDispatch = (): FormDispatchContextValue => useContext(FormDispatchContext);
+  if (state === undefined || dispatch === undefined) {
+    throw new Error('useForm must be used inside a Form.');
+  }
+
+  return { ...state, dispatch };
+};
 
 export default FormContextProvider;
