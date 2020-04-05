@@ -1,14 +1,17 @@
-import React, { createContext, useContext, useMemo, useReducer } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
-import { Field, FormStateContextValue, FormDispatchContextValue, FormState } from './FormContext';
+import { FormProps } from '../../components/Form/Form';
+import { useWatch } from '../../hooks';
+
+import { FormStateContextValue, FormDispatchContextValue, FormState, FormMember } from './FormContext';
 import formReducer from './reducer';
 
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
 export const FormDispatchContext = createContext<FormDispatchContextValue | undefined>(undefined);
 
-const FormContextProvider: React.FC = ({ children }) => {
+const FormContextProvider: React.FC<PropsWithChildren<{ watch: FormProps['watch'] }>> = ({ children, watch }) => {
   const [formState, dispatch] = useReducer(formReducer, {});
 
   const { state } = useMemo<{ state: FormState }>(
@@ -18,15 +21,20 @@ const FormContextProvider: React.FC = ({ children }) => {
     [formState]
   );
 
+  useWatch(state, watch);
+
   return (
-    <FormStateContext.Provider value={{ state, watch: (path: string): Field => get(state, path) as Field }}>
+    <FormStateContext.Provider
+      value={{ state, getState: (path: string): FormMember => get(state, path) as FormMember }}
+    >
       <FormDispatchContext.Provider value={dispatch}>{children}</FormDispatchContext.Provider>
     </FormStateContext.Provider>
   );
 };
 
 FormContextProvider.propTypes = {
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  watch: PropTypes.func
 };
 
 /**

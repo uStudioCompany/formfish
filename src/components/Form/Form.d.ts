@@ -1,5 +1,6 @@
 import { ReactElement } from 'react';
 import { ErrorState, FormState } from '../../context/form/FormContext';
+import { Watch } from '../../hooks/use-watch';
 
 export interface FormProps {
   /**
@@ -10,6 +11,11 @@ export interface FormProps {
    * Name of the Form
    */
   name: string;
+
+  /**
+   * A method to access Form state at any time
+   */
+  watch?: Watch<FormState>;
   /**
    * Callback invoked after submitting the Form
    */

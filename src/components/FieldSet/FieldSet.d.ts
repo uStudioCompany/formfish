@@ -1,4 +1,6 @@
 import { ReactElement } from 'react';
+import { FieldArray, FieldSet } from '../../context/form/FormContext';
+import { Watch } from '../../hooks/use-watch';
 
 export interface FieldSetProps {
   /**
@@ -10,6 +12,10 @@ export interface FieldSetProps {
    * Name of the FieldSeet
    */
   name: string;
+  /**
+   * A method to access FieldSet state at any time
+   */
+  watch?: Watch<FieldSet | FieldArray>;
   /**
    * Index to be accepted when used inside of an array
    */

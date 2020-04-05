@@ -1,4 +1,6 @@
 import { ReactElement } from 'react';
+import { Field } from '../../context/form/FormContext';
+import { Watch } from '../../hooks/use-watch';
 
 export interface FieldProps {
   /**
@@ -10,6 +12,10 @@ export interface FieldProps {
    * Name of the Field
    */
   name: string;
+  /**
+   * A method to access Field state at any time
+   */
+  watch?: Watch<Field>;
   /**
    * Index to be accepted when used inside of an array
    */

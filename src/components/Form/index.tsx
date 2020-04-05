@@ -1,14 +1,20 @@
 import React, { FormEvent } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
+
 import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
 import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
 import { createFieldName } from '../../utils';
 import { FormProps } from './Form';
 
-import Styled from './style';
-
-const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit, onValidate, className = '' }) => {
+const Form: React.FC<InferProps<FormProps>> = ({
+  children: form,
+  name,
+  watch,
+  onSubmit,
+  onValidate,
+  className = ''
+}) => {
   const handleValidate = (state: FormState, dispatch: FormDispatchContextValue): void => {
     if (onValidate) {
       try {
@@ -33,14 +39,14 @@ const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit,
   };
 
   return (
-    <FormContextProvider>
+    <FormContextProvider watch={watch}>
       <FormStateContext.Consumer>
         {({ state }: FormStateContextValue) => (
           <FormDispatchContext.Consumer>
             {(dispatch: FormDispatchContextValue) => (
-              <Styled.Form id={name} className={className} onSubmit={handleSubmit(state, dispatch)}>
+              <form id={name} className={className} onSubmit={handleSubmit(state, dispatch)}>
                 <PathContext.Provider value={createFieldName(name)}>{form}</PathContext.Provider>
-              </Styled.Form>
+              </form>
             )}
           </FormDispatchContext.Consumer>
         )}
@@ -52,6 +58,7 @@ const Form: React.FC<InferProps<FormProps>> = ({ children: form, name, onSubmit,
 Form.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
   name: PropTypes.string.isRequired,
+  watch: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   onValidate: PropTypes.func,
   className: PropTypes.string

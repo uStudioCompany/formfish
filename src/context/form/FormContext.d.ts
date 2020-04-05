@@ -5,7 +5,7 @@ export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
   state: FormState;
-  watch(path: string): Field;
+  getState(path: string): FormMember;
 }
 
 export interface Field {
@@ -14,11 +14,11 @@ export interface Field {
   error?: string;
 }
 
-type FieldSet = {
+export type FieldSet = {
   [name: string]: FormMember;
 };
 
-type FieldArray = FormMember[];
+export type FieldArray = FormMember[];
 
 export type FormState = FieldSet;
 
