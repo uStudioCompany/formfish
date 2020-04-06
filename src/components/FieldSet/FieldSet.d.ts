@@ -21,10 +21,6 @@ export interface FieldSetProps {
    */
   index?: number;
   /**
-   * Indicates that every Field inside this FieldSet should be disabled
-   */
-  isDisabled?: boolean;
-  /**
    * For extension with styled-components or CSS classes
    */
   className?: string;
