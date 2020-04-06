@@ -39,14 +39,14 @@ FormContextProvider.propTypes = {
  * @return Returns an object with state, watch and dispatch fields from our context
  */
 export const useForm = (): FormStateContextValue & { dispatch: FormDispatchContextValue } => {
-  const state = useContext(FormStateContext);
+  const stateContext = useContext(FormStateContext);
   const dispatch = useContext(FormDispatchContext);
 
-  if (state === undefined || dispatch === undefined) {
+  if (stateContext === undefined || dispatch === undefined) {
     throw new Error('useForm must be used inside a Form.');
   }
 
-  return { ...state, dispatch };
+  return { ...stateContext, dispatch };
 };
 
 export default FormContextProvider;
