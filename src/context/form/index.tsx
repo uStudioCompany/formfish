@@ -14,12 +14,7 @@ export const FormDispatchContext = createContext<FormDispatchContextValue | unde
 const FormContextProvider: React.FC<PropsWithChildren<{ watch: FormProps['watch'] }>> = ({ children, watch }) => {
   const [formState, dispatch] = useReducer(formReducer, {});
 
-  const { state } = useMemo<{ state: FormState }>(
-    () => ({
-      state: formState
-    }),
-    [formState]
-  );
+  const state = useMemo<FormState>(() => formState, [formState]);
 
   useWatch(state, watch);
 
