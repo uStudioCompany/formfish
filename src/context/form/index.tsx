@@ -43,7 +43,7 @@ FormContextProvider.propTypes = {
  *
  * @return Returns an object with state, watch and dispatch fields from our context
  */
-export const useFormContext = (): FormStateContextValue & { dispatch: FormDispatchContextValue } => {
+export const useForm = (): FormStateContextValue & { dispatch: FormDispatchContextValue } => {
   const state = useContext(FormStateContext);
   const dispatch = useContext(FormDispatchContext);
 

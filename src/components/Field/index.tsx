@@ -1,7 +1,7 @@
 import React, { cloneElement, useEffect } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 
-import { useFormContext } from '../../context/form';
+import { useForm } from '../../context/form';
 import { Field } from '../../context/form/FormContext';
 import { usePath } from '../../context/path';
 import { createFieldPath } from '../../utils';
@@ -11,7 +11,7 @@ const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, watch,
   const { value = 'value', defaultValue = 'defaultValue', onChange = 'onChange' } = getters;
 
   const path = usePath();
-  const { getState, dispatch } = useFormContext();
+  const { getState, dispatch } = useForm();
 
   const fieldPath = createFieldPath({ path, name, index });
 

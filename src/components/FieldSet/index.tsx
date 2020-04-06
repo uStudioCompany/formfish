@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import { useFormContext } from '../../context/form';
+import { useForm } from '../../context/form';
 
 import PathContext, { usePath } from '../../context/path';
 import { useWatch } from '../../hooks';
@@ -17,7 +17,7 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   className = ''
 }) => {
   const path = usePath();
-  const { getState } = useFormContext();
+  const { getState } = useForm();
 
   const fieldSetPath = createFieldPath({ path, name, index });
   const fieldSetState = getState(fieldSetPath);
