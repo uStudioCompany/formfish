@@ -17,6 +17,10 @@ export interface FieldProps {
    */
   watch?: Watch<Field>;
   /**
+   * Custom change handler
+   */
+  handleChange?(changeState: unknown): unknown;
+  /**
    * Index to be accepted when used inside of an array
    */
   index?: number;

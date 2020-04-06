@@ -14,7 +14,7 @@
   "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "dev": "parcel src/test/index.html --co-cache",
+    "dev": "parcel src/test/index.html --no-cache",
     "clean": "rimraf lib",
     "build:copy": "copyfiles README.md LICENSE package.json lib",
     "build:components": "babel src --out-dir lib --extensions .ts,.tsx --copy-files",

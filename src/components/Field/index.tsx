@@ -1,18 +1,29 @@
-import React, { cloneElement, useEffect } from 'react';
+import React, { cloneElement, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useForm } from '../../context/form';
 import { Field as FormField } from '../../context/form/FormContext';
 import { usePath } from '../../context/path';
+import { useWatch } from '../../hooks';
 import { FieldProps } from './Field';
 
-const Field: React.FC<FieldProps> = ({ children: input, name, watch, index, getters = {} }) => {
+const Field: React.FC<FieldProps> = ({
+  children: input,
+  name,
+  watch,
+  handleChange = (value: unknown): unknown => value,
+  index,
+  getters = {}
+}) => {
   const { value = 'value', defaultValue = 'defaultValue', onChange = 'onChange' } = getters;
+
+  const [inputValue, setInputValue] = useState<unknown>();
 
   const path = usePath();
   const { getState, dispatch, createFieldPath } = useForm();
 
   const fieldPath = createFieldPath({ path, name, index });
+  const fieldState = getState(fieldPath) as FormField;
 
   useEffect(() => {
     dispatch({
@@ -27,17 +38,15 @@ const Field: React.FC<FieldProps> = ({ children: input, name, watch, index, gett
     return (): void => dispatch({ type: 'unregister', payload: fieldPath });
   }, []);
 
-  const fieldState = getState(fieldPath) as FormField;
+  useEffect(() => {
+    dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
+  }, [inputValue]);
+
+  useWatch({ ...fieldState, value: inputValue }, watch);
 
   return cloneElement(input, {
     [value]: fieldState?.value,
-    [onChange]: (inputValue?: unknown) => {
-      if (watch) {
-        watch({ ...fieldState, value: inputValue });
-      }
-
-      dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
-    }
+    [onChange]: (changeState?: unknown) => setInputValue(handleChange(changeState))
   });
 };
 
