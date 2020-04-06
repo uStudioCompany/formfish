@@ -11,11 +11,6 @@ export interface FormProps {
    * Name of the Form
    */
   name: string;
-
-  /**
-   * A method to access Form state at any time
-   */
-  watch?: Watch<FormState>;
   /**
    * Callback invoked after submitting the Form
    */
@@ -26,6 +21,14 @@ export interface FormProps {
    * After throwing it dispatches an action that supplies ErrorState to the reducer
    */
   onValidate?(state: FormState): ErrorState;
+  /**
+   * A method to access Form state at any time
+   */
+  watch?: Watch<FormState>;
+  /**
+   * Custom separator for createFieldName function
+   */
+  nameSeparator?: string;
   /**
    * For extension with styled-components or CSS classes
    */

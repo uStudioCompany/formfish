@@ -5,7 +5,7 @@
  * @param name Field name
  * @param separator Custom separator
  */
-const createFieldName = (name: string, separator = ' '): string => {
+const createFieldName = (name: string, separator: string): string => {
   const arrayFromName = name.toLowerCase().split(separator);
 
   return `${arrayFromName[0]}${arrayFromName
