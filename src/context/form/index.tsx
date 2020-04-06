@@ -2,16 +2,25 @@ import React, { createContext, PropsWithChildren, useContext, useMemo, useReduce
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
-import { FormProps } from '../../components/Form/Form';
 import { useWatch } from '../../hooks';
-
-import { FormStateContextValue, FormDispatchContextValue, FormState, FormMember } from './FormContext';
+import { createFieldPath } from '../../utils';
+import {
+  FormStateContextValue,
+  FormDispatchContextValue,
+  FormState,
+  FormMember,
+  FormContextProviderProps
+} from './FormContext';
 import formReducer from './reducer';
 
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
 export const FormDispatchContext = createContext<FormDispatchContextValue | undefined>(undefined);
 
-const FormContextProvider: React.FC<PropsWithChildren<{ watch: FormProps['watch'] }>> = ({ children, watch }) => {
+const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>> = ({
+  children,
+  watch,
+  nameSeparator
+}) => {
   const [formState, dispatch] = useReducer(formReducer, {});
 
   const state = useMemo<FormState>(() => formState, [formState]);
@@ -20,7 +29,10 @@ const FormContextProvider: React.FC<PropsWithChildren<{ watch: FormProps['watch'
 
   return (
     <FormStateContext.Provider
-      value={{ state, getState: (path: string): FormMember => get(state, path) as FormMember }}
+      value={{
+        createFieldPath: (args): string => createFieldPath({ ...args, nameSeparator }),
+        getState: (path: string): FormMember => get(state, path) as FormMember
+      }}
     >
       <FormDispatchContext.Provider value={dispatch}>{children}</FormDispatchContext.Provider>
     </FormStateContext.Provider>

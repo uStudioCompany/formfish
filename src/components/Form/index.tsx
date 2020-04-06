@@ -4,7 +4,6 @@ import PropTypes, { InferProps } from 'prop-types';
 import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
 import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
-import SeparatorContext from '../../context/separator';
 import { createFieldName } from '../../utils';
 import { FormProps } from './Form';
 
@@ -41,20 +40,18 @@ const Form: React.FC<InferProps<FormProps>> = ({
   };
 
   return (
-    <FormContextProvider watch={watch}>
-      <SeparatorContext.Provider value={nameSeparator}>
-        <FormStateContext.Consumer>
-          {({ state }: FormStateContextValue) => (
-            <FormDispatchContext.Consumer>
-              {(dispatch: FormDispatchContextValue) => (
-                <form id={name} className={className} onSubmit={handleSubmit(state, dispatch)}>
-                  <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
-                </form>
-              )}
-            </FormDispatchContext.Consumer>
-          )}
-        </FormStateContext.Consumer>
-      </SeparatorContext.Provider>
+    <FormContextProvider watch={watch} nameSeparator={nameSeparator}>
+      <FormStateContext.Consumer>
+        {({ getState }: FormStateContextValue) => (
+          <FormDispatchContext.Consumer>
+            {(dispatch: FormDispatchContextValue) => (
+              <form id={name} className={className} onSubmit={handleSubmit(getState(name) as FormState, dispatch)}>
+                <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
+              </form>
+            )}
+          </FormDispatchContext.Consumer>
+        )}
+      </FormStateContext.Consumer>
     </FormContextProvider>
   );
 };

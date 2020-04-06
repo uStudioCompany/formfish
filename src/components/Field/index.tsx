@@ -4,18 +4,15 @@ import PropTypes, { InferProps } from 'prop-types';
 import { useForm } from '../../context/form';
 import { Field as FormField } from '../../context/form/FormContext';
 import { usePath } from '../../context/path';
-import { useSeparator } from '../../context/separator';
-import { createFieldPath } from '../../utils';
 import { FieldProps } from './Field';
 
 const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, watch, index, getters }) => {
   const { value = 'value', defaultValue = 'defaultValue', onChange = 'onChange' } = getters;
 
   const path = usePath();
-  const nameSeparator = useSeparator();
-  const { getState, dispatch } = useForm();
+  const { getState, dispatch, createFieldPath } = useForm();
 
-  const fieldPath = createFieldPath({ path, name, index, nameSeparator });
+  const fieldPath = createFieldPath({ path, name, index });
 
   useEffect(() => {
     dispatch({

@@ -1,10 +1,17 @@
 import { Dispatch } from 'react';
+
+import { FormProps } from '../../components/Form/Form';
 import { FormAction } from './actions';
+
+export interface FormContextProviderProps {
+  watch: FormProps['watch'];
+  nameSeparator: string;
+}
 
 export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
-  state: FormState;
+  createFieldPath: (args: { path: string; name: string; index?: number }) => string;
   getState(path: string): FormMember;
 }
 
@@ -14,9 +21,9 @@ export interface Field {
   error?: string;
 }
 
-export type FieldSet = {
+export interface FieldSet {
   [name: string]: FormMember;
-};
+}
 
 export type FieldArray = FormMember[];
 

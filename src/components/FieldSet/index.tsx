@@ -3,9 +3,7 @@ import PropTypes, { InferProps } from 'prop-types';
 
 import { useForm } from '../../context/form';
 import PathContext, { usePath } from '../../context/path';
-import { useSeparator } from '../../context/separator';
 import { useWatch } from '../../hooks';
-import { createFieldPath } from '../../utils';
 import { FieldSetProps } from './FieldSet';
 import Style from './style';
 
@@ -18,10 +16,9 @@ const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
   className = ''
 }) => {
   const path = usePath();
-  const nameSeparator = useSeparator();
-  const { getState } = useForm();
+  const { getState, createFieldPath } = useForm();
 
-  const fieldSetPath = createFieldPath({ path, name, index, nameSeparator });
+  const fieldSetPath = createFieldPath({ path, name, index });
   const fieldSetState = getState(fieldSetPath);
 
   useWatch(fieldSetState, watch);
