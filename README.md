@@ -1,4 +1,4 @@
-# Form Engine
+# FormFish 🐠
 
 This project represents an idea to bring React into the world of HTML
 forms.
@@ -7,13 +7,13 @@ it easy to interact with the Form and allowing it to be built by itself.
 
 ## Installation
 
-`form-engine` is being distributed by `npm` package registry. Make sure to have
+`formfish` is being distributed by `npm` package registry. Make sure to have
 `react`, `react-dom` and `styled-components` installed to get it properly working.
 
 ```shell script
-$ npm i form-engine
+$ npm i formfish
 # or
-$ yarn add form-engine
+$ yarn add formfish
 ```
 
 ## Usage
@@ -22,15 +22,15 @@ This package has three components exposed. Each of them could be imported
 from the root (named import) or from the respective component's folder (`default` import).
 
 ```typescript jsx
-import { Field } from 'form-engine';
+import { Field } from 'formfish';
 // or
-import Field from 'form-engine/components/Field';
+import Field from 'formfish/components/Field';
 ```
 
-To use `form-engine` properly, first, make a form!
+To use `formfish` properly, first, make a form!
 
 ```typescript jsx
-import { Form, Field } from 'form-engine';
+import { Form, Field } from 'formfish';
 
 const App = () => (
   <Form name="My lovely form" onSubmit={handleSubmit}>
@@ -133,7 +133,7 @@ accepts overrides for names of each of these values.
 
 ## `watch`
 
-Every component in a `form-engine` has build-in `watch` method
+Every component in a `formfish` has build-in `watch` method
 that grants access to its state.
 
 It accepts a function with a proper argument (TypeScript supported)

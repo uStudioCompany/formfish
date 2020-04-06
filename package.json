@@ -1,9 +1,9 @@
 {
-  "name": "form-engine",
+  "name": "formfish",
   "description": "React Context Form Engine",
   "version": "0.1.0",
   "author": "uStudio Front-End Department",
-  "repository": "github:uStudioCompany/form-engine",
+  "repository": "github:uStudioCompany/formfish",
   "license": "MIT",
   "keywords": ["react", "form", "typescript"],
   "main": "index.js",
