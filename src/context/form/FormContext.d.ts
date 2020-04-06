@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { FormAction } from './action';
+import { FormAction } from './actions';
 
 export type FormDispatchContextValue = Dispatch<FormAction>;
 

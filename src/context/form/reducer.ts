@@ -2,7 +2,7 @@ import set from 'lodash.set';
 import unset from 'lodash.unset';
 import merge from 'lodash.merge';
 
-import { FormAction } from './action';
+import { FormAction } from './actions';
 import { FormState } from './FormContext';
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
