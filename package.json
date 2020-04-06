@@ -1,7 +1,7 @@
 {
   "name": "formfish",
   "description": "React Context Form Engine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "uStudio Front-End Department",
   "repository": "github:uStudioCompany/formfish",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "build:dts": "tsc -p tsconfig.json",
     "build": "npm-run-all clean -p build:components build:dts build:copy",
     "release": "standard-version",
-    "publication": "yarn publish lib"
+    "publication": "yarn build && yarn publish lib"
   },
   "dependencies": {
     "copyfiles": "^2.2.0",
