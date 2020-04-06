@@ -1,13 +1,6 @@
 {
   "presets": ["@babel/react", "@babel/typescript"],
   "plugins": [
-    [
-      "styled-components",
-      {
-        "displayName": true,
-        "ssr": true
-      }
-    ],
     "@babel/proposal-nullish-coalescing-operator",
     "@babel/proposal-object-rest-spread",
     "@babel/proposal-optional-chaining"
