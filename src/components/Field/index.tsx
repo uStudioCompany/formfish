@@ -2,7 +2,7 @@ import React, { cloneElement, useEffect } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 
 import { useForm } from '../../context/form';
-import { Field } from '../../context/form/FormContext';
+import { Field as FormField } from '../../context/form/FormContext';
 import { usePath } from '../../context/path';
 import { useSeparator } from '../../context/separator';
 import { createFieldPath } from '../../utils';
@@ -30,7 +30,7 @@ const Field: React.FC<InferProps<FieldProps>> = ({ children: input, name, watch,
     return (): void => dispatch({ type: 'unregister', payload: fieldPath });
   }, []);
 
-  const fieldState = getState(fieldPath) as Field;
+  const fieldState = getState(fieldPath) as FormField;
 
   return cloneElement(input, {
     [value]: fieldState?.value,
