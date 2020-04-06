@@ -17,7 +17,7 @@ const App: React.FC = () => {
         ))}
       </FieldSet>
 
-      <FieldSet name="field-object" watch={watch}>
+      <FieldSet name="field-object">
         <Field name="field-four" handleChange={handleChange}>
           <input type="text" />
         </Field>

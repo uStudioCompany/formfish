@@ -55,7 +55,7 @@ export const useForm = (): FormStateContextValue & { dispatch: FormDispatchConte
   const dispatch = useContext(FormDispatchContext);
 
   if (stateContext === undefined || dispatch === undefined) {
-    throw new Error('useForm must be used inside a Form.');
+    throw new ReferenceError('useForm must be used inside a Form.');
   }
 
   return { ...stateContext, dispatch };
