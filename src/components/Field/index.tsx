@@ -42,7 +42,7 @@ const Field: React.FC<FieldProps> = memo(
       if (subscribe) {
         subscribe();
       }
-    }, [inputValue, subscribe]);
+    }, [inputValue]);
 
     useWatch(newFieldState, watch);
 
