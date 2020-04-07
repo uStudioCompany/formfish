@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/uStudioCompany/formfish/compare/v0.3.0...v0.3.1) (2020-04-07)
+
+
+### Bug Fixes
+
+* Change unregister action logic ([831a1cb](https://github.com/uStudioCompany/formfish/commit/831a1cbe7bb8278c1c2873572dabdc305e8c8eb3))
+* Fix create-field-name function for single-word names ([c7f5da8](https://github.com/uStudioCompany/formfish/commit/c7f5da8b134bbc90da1456142782c7647efc3160))
+
 ## [0.3.0](https://github.com/uStudioCompany/formfish/compare/v0.2.2...v0.3.0) (2020-04-07)
 
 
