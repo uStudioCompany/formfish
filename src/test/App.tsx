@@ -8,21 +8,21 @@ const App: React.FC = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => event.target.value;
 
   return (
-    <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
+    <Form name="form" nameSeparator="-" onSubmit={handleSubmit} getValue={handleChange}>
       <FieldSet name="field-array">
         {['field-one', 'field-two', 'field-three'].map((name, index) => (
-          <Field name={name} index={index} key={name} handleChange={handleChange}>
+          <Field name={name} index={index} key={name}>
             <input type="text" />
           </Field>
         ))}
       </FieldSet>
 
-      <FieldSet name="field-object">
-        <Field name="field-four" handleChange={handleChange}>
+      <FieldSet name="field object" nameSeparator=" ">
+        <Field name="field-four" nameSeparator="-">
           <input type="text" />
         </Field>
 
-        <Field name="field-five" handleChange={handleChange}>
+        <Field name="field five">
           <input type="text" />
         </Field>
       </FieldSet>

@@ -1,22 +1,21 @@
 import React, { cloneElement, memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useForm } from '../../context/form';
+import { useForm, usePath, commonPropTypes, useCommonProps } from '../../context';
 import { Field as FormField } from '../../context/form/FormContext';
-import { usePath } from '../../context/path';
 import { useWatch } from '../../hooks';
+import { createFieldPath } from '../../utils';
 import { useFieldSetContext } from '../FieldSet/context';
 import { FieldProps } from './Field';
 
 const Field: React.FC<FieldProps> = memo(
-  ({ children: input, name, watch, handleChange = (value: unknown): unknown => value, index, getters = {} }) => {
-    const { value = 'value', defaultValue = 'defaultValue', onChange = 'onChange' } = getters;
-
+  ({ children: input, name, watch, getValue, setValue, nameSeparator, getters, index }) => {
     const path = usePath();
     const subscribe = useFieldSetContext();
-    const { getState, dispatch, createFieldPath } = useForm();
+    const { getState, dispatch } = useForm();
+    const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-    const fieldPath = createFieldPath({ path, name, index });
+    const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
     const fieldState = getState(fieldPath) as FormField;
 
     const [inputValue, setInputValue] = useState<unknown>();
@@ -28,7 +27,7 @@ const Field: React.FC<FieldProps> = memo(
         payload: {
           name,
           path: fieldPath,
-          value: input.props?.[defaultValue]
+          value: input.props?.[commonProps.getters.defaultValue]
         }
       });
 
@@ -46,29 +45,23 @@ const Field: React.FC<FieldProps> = memo(
     useWatch(newFieldState, watch);
 
     return cloneElement(input, {
-      [value]: fieldState?.value,
-      [onChange]: (changeState?: unknown) => setInputValue(handleChange(changeState))
+      [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
+      [commonProps.getters.event]: (state?: unknown) => setInputValue(commonProps.getValue(state))
     });
   }
 );
 
 Field.propTypes = {
   children: PropTypes.element.isRequired,
-  name: PropTypes.string.isRequired,
-  watch: PropTypes.func,
   index: PropTypes.number,
-  getters: PropTypes.shape({
-    value: PropTypes.string,
-    defaultValue: PropTypes.string,
-    onChange: PropTypes.string
-  })
+  ...commonPropTypes
 };
 
 Field.defaultProps = {
   getters: {
     value: 'value',
     defaultValue: 'defaultValue',
-    onChange: 'onChange'
+    event: 'onChange'
   }
 };
 

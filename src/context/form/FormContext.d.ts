@@ -5,13 +5,11 @@ import { FormAction } from './actions';
 
 export interface FormContextProviderProps {
   watch: FormProps['watch'];
-  nameSeparator: string;
 }
 
 export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
-  createFieldPath: (args: { path: string; name: string; index?: number }) => string;
   getState(path: string): FormMember;
 }
 
