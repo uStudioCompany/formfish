@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import { ErrorState, FormState } from '../../context/form/FormContext';
 import { Watch } from '../../hooks/use-watch';
 import { CommonProps } from '../../types';
+import { FlatState } from '../../utils/flatten-state';
 
 export interface FormProps extends CommonProps {
   /**
@@ -11,7 +12,7 @@ export interface FormProps extends CommonProps {
   /**
    * Callback invoked after submitting the Form
    */
-  onSubmit(state: FormState): void;
+  onSubmit(state: FlatState, context?: FormState): void;
   /**
    * Optional callback invoked before onSubmit
    * Called with the Form state it should validate it and throw an error with proper interface

@@ -1,14 +1,15 @@
 import React, { FormEvent } from 'react';
-import PropTypes, { InferProps } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
 import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
 import CommonPropsContext, { commonPropTypes } from '../../context/common-props';
 import { createFieldName } from '../../utils';
+import flattenState from '../../utils/flatten-state';
 import { FormProps } from './Form';
 
-const Form: React.FC<InferProps<FormProps>> = ({
+const Form: React.FC<FormProps> = ({
   children: form,
   name,
   onSubmit,
@@ -17,19 +18,21 @@ const Form: React.FC<InferProps<FormProps>> = ({
   getValue,
   setValue,
   getters,
-  nameSeparator,
+  nameSeparator = ' ',
   className = ''
 }) => {
   const handleValidate = (state: FormState, dispatch: FormDispatchContextValue): void => {
-    if (onValidate) {
-      try {
+    try {
+      if (onValidate) {
         onValidate(state);
-      } catch (errorState) {
-        dispatch({
-          type: 'set_error',
-          payload: errorState
-        });
       }
+
+      onSubmit(flattenState(state), state);
+    } catch (errorState) {
+      dispatch({
+        type: 'set_error',
+        payload: errorState
+      });
     }
   };
 
@@ -39,8 +42,6 @@ const Form: React.FC<InferProps<FormProps>> = ({
     event.preventDefault();
 
     handleValidate(state, dispatch);
-
-    onSubmit(state);
   };
 
   return (
@@ -49,7 +50,11 @@ const Form: React.FC<InferProps<FormProps>> = ({
         {({ getState }: FormStateContextValue) => (
           <FormDispatchContext.Consumer>
             {(dispatch: FormDispatchContextValue) => (
-              <form id={name} className={className} onSubmit={handleSubmit(getState(name) as FormState, dispatch)}>
+              <form
+                id={name}
+                className={className}
+                onSubmit={handleSubmit({ [name]: getState(name) } as FormState, dispatch)}
+              >
                 <CommonPropsContext.Provider value={{ getValue, setValue, nameSeparator, getters }}>
                   <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
                 </CommonPropsContext.Provider>
@@ -63,7 +68,10 @@ const Form: React.FC<InferProps<FormProps>> = ({
 };
 
 Form.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
+    PropTypes.element.isRequired
+  ]).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onValidate: PropTypes.func,
   className: PropTypes.string,
