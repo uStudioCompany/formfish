@@ -8,7 +8,7 @@ it easy to interact with the Form and allowing it to be built by itself.
 ## Installation
 
 `formfish` is being distributed by `npm` package registry. Make sure to have
-`react`, `react-dom` and `styled-components` installed to get it properly working.
+`react` and `react-dom` installed to get it properly working (of course).
 
 ```shell script
 $ npm i formfish

@@ -1,50 +1,54 @@
-import React from 'react';
-import PropTypes, { InferProps } from 'prop-types';
+import React, { memo, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import { useForm } from '../../context/form';
-import PathContext, { usePath } from '../../context/path';
+import CommonPropsContext from '../../context/common-props';
+import { useForm, usePath, commonPropTypes, useCommonProps } from '../../context';
+import PathContext from '../../context/path';
+import { createFieldPath } from '../../utils';
+import FieldSetContext from './context';
 import { useWatch } from '../../hooks';
 import { FieldSetProps } from './FieldSet';
-import Style from './style';
 
-const FieldSet: React.FC<InferProps<FieldSetProps>> = ({
-  children: fields,
-  name,
-  watch,
-  index,
-  isDisabled = false,
-  className = ''
-}) => {
-  const path = usePath();
-  const { getState, createFieldPath } = useForm();
+const FieldSet: React.FC<FieldSetProps> = memo(
+  ({ children: fields, name, watch, index, getValue, setValue, nameSeparator, getters, className = '' }) => {
+    const path = usePath();
+    const { getState } = useForm();
+    const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-  const fieldSetPath = createFieldPath({ path, name, index });
-  const fieldSetState = getState(fieldSetPath);
+    const fieldSetPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
+    const fieldSetState = getState(fieldSetPath);
 
-  useWatch(fieldSetState, watch);
+    const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
 
-  return (
-    <Style.FieldSet disabled={isDisabled}>
+    const subscribe = (): void => {
+      setNewFieldSetState(Array.isArray(fieldSetState) ? [...fieldSetState] : { ...fieldSetState });
+    };
+
+    useWatch(newFieldSetState, watch);
+
+    return (
       <div className={className}>
-        <legend>{name}</legend>
-
-        <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
+        <FieldSetContext.Provider value={subscribe}>
+          <CommonPropsContext.Provider value={commonProps}>
+            <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
+          </CommonPropsContext.Provider>
+        </FieldSetContext.Provider>
       </div>
-    </Style.FieldSet>
-  );
-};
+    );
+  }
+);
 
 FieldSet.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
-  name: PropTypes.string.isRequired,
-  watch: PropTypes.func,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
+    PropTypes.element.isRequired
+  ]).isRequired,
   index: PropTypes.number,
-  isDisabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  ...commonPropTypes
 };
 
 FieldSet.defaultProps = {
-  isDisabled: false,
   className: ''
 };
 

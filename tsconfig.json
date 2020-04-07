@@ -3,7 +3,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
@@ -16,6 +16,6 @@
     "declaration": true,
     "emitDeclarationOnly": true
   },
-  "exclude": ["node_modules", "lib", "test"],
+  "exclude": ["node_modules", "lib"],
   "include": ["src"]
 }

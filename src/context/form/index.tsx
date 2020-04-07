@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
 import { useWatch } from '../../hooks';
-import { createFieldPath } from '../../utils';
 import {
   FormStateContextValue,
   FormDispatchContextValue,
@@ -16,11 +15,7 @@ import formReducer from './reducer';
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
 export const FormDispatchContext = createContext<FormDispatchContextValue | undefined>(undefined);
 
-const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>> = ({
-  children,
-  watch,
-  nameSeparator
-}) => {
+const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>> = ({ children, watch }) => {
   const [formState, dispatch] = useReducer(formReducer, {});
 
   const state = useMemo<FormState>(() => formState, [formState]);
@@ -30,7 +25,6 @@ const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>>
   return (
     <FormStateContext.Provider
       value={{
-        createFieldPath: (args): string => createFieldPath({ ...args, nameSeparator }),
         getState: (path: string): FormMember => get(state, path) as FormMember
       }}
     >
@@ -55,7 +49,7 @@ export const useForm = (): FormStateContextValue & { dispatch: FormDispatchConte
   const dispatch = useContext(FormDispatchContext);
 
   if (stateContext === undefined || dispatch === undefined) {
-    throw new Error('useForm must be used inside a Form.');
+    throw new ReferenceError('useForm must be used inside a Form.');
   }
 
   return { ...stateContext, dispatch };

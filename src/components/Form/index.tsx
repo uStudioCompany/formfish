@@ -4,6 +4,7 @@ import PropTypes, { InferProps } from 'prop-types';
 import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
 import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
+import CommonPropsContext, { commonPropTypes } from '../../context/common-props';
 import { createFieldName } from '../../utils';
 import { FormProps } from './Form';
 
@@ -13,7 +14,10 @@ const Form: React.FC<InferProps<FormProps>> = ({
   onSubmit,
   onValidate,
   watch,
-  nameSeparator = ' ',
+  getValue,
+  setValue,
+  getters,
+  nameSeparator,
   className = ''
 }) => {
   const handleValidate = (state: FormState, dispatch: FormDispatchContextValue): void => {
@@ -40,13 +44,15 @@ const Form: React.FC<InferProps<FormProps>> = ({
   };
 
   return (
-    <FormContextProvider watch={watch} nameSeparator={nameSeparator}>
+    <FormContextProvider watch={watch}>
       <FormStateContext.Consumer>
         {({ getState }: FormStateContextValue) => (
           <FormDispatchContext.Consumer>
             {(dispatch: FormDispatchContextValue) => (
               <form id={name} className={className} onSubmit={handleSubmit(getState(name) as FormState, dispatch)}>
-                <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
+                <CommonPropsContext.Provider value={{ getValue, setValue, nameSeparator, getters }}>
+                  <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
+                </CommonPropsContext.Provider>
               </form>
             )}
           </FormDispatchContext.Consumer>
@@ -58,11 +64,10 @@ const Form: React.FC<InferProps<FormProps>> = ({
 
 Form.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.element), PropTypes.element]).isRequired,
-  name: PropTypes.string.isRequired,
-  watch: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
   onValidate: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  ...commonPropTypes
 };
 
 Form.defaultProps = {
