@@ -19,7 +19,8 @@
     "build:copy": "copyfiles README.md LICENSE package.json lib",
     "build:components": "babel src --out-dir lib --extensions .ts,.tsx --copy-files",
     "build:dts": "tsc -p tsconfig.json",
-    "build": "npm-run-all clean -p build:components build:dts build:copy",
+    "build:clean": "rimraf lib/test",
+    "build": "npm-run-all clean -p build:components build:dts build:copy -s build:clean",
     "release": "standard-version",
     "publication": "yarn publish lib"
   },
