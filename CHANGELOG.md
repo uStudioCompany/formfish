@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/uStudioCompany/formfish/compare/v0.2.2...v0.3.0) (2020-04-07)
+
+
+### Features
+
+* make onSubmit return flattened state and whole context ([ff7ea4f](https://github.com/uStudioCompany/formfish/commit/ff7ea4f59bad6d830cd730afb857a40cf77166ee))
+
 ### [0.2.2](https://github.com/uStudioCompany/formfish/compare/v0.2.1...v0.2.2) (2020-04-07)
 
 
