@@ -114,8 +114,8 @@ This will produce a state with the following interface:
 }
 ```
 
-Also it can be represented as an array of fields (**don't forget to pass
-`index` to each one of those Fields!**):
+Also it can be represented as an array of fields or field sets
+(**don't forget to pass `index` to each one of those Fields/FieldSets!**):
 
 ```typescript jsx
 <FieldSet name="Array of fields">
