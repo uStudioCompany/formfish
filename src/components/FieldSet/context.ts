@@ -4,14 +4,8 @@ type FieldSetContextValue = () => void;
 
 const FieldSetContext = createContext<FieldSetContextValue | undefined>(undefined);
 
-export const useFieldSetContext = (): FieldSetContextValue => {
-  const subscribe = useContext(FieldSetContext);
-
-  if (subscribe === undefined) {
-    throw new ReferenceError('useFieldSetContext must be used inside a FieldSet.');
-  }
-
-  return subscribe;
+export const useFieldSetContext = (): FieldSetContextValue | undefined => {
+  return useContext(FieldSetContext);
 };
 
 export default FieldSetContext;

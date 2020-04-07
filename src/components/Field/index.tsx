@@ -39,8 +39,10 @@ const Field: React.FC<FieldProps> = memo(
 
       setNewFieldState({ ...fieldState, value: inputValue });
 
-      subscribe();
-    }, [inputValue]);
+      if (subscribe) {
+        subscribe();
+      }
+    }, [inputValue, subscribe]);
 
     useWatch(newFieldState, watch);
 

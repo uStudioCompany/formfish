@@ -67,7 +67,7 @@ to provide them with needed state. Use any level of depth - it won't break!
 
 ### Validation
 
-If you'd like to somehow validate your form - yse any method you find fit.
+If you'd like to somehow validate your form - use any method you find fit.
 `Form` component has a built-in method `onValidate` that accepts a special callback.
 
 If your validation is successful inside this callback, you pass!

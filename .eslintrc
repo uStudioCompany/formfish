@@ -35,6 +35,7 @@
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "warn",
     "import/no-cycle": "warn",
-    "react/require-default-props": "warn"
+    "react/require-default-props": "warn",
+    "react/default-props-match-prop-types": "warn"
   }
 }
