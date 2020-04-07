@@ -85,9 +85,9 @@ as an object-like structure:
 
 ```typescript jsx
 <FieldSet name="Object of fields">
-    <Field name="Field one">...</Field>
+  <Field name="Field one">...</Field>
 
-    <Field name="Field two">...</Field>
+  <Field name="Field two">...</Field>
 </FieldSet>
 ```
 
@@ -102,14 +102,16 @@ This will produce a state with the following interface:
 }
 ```
 
-Also it can be represented as an array of fields (**don't forget to pass 
-`index` to each one of them!**): 
+Also it can be represented as an array of fields (**don't forget to pass
+`index` to each one of them!**):
 
 ```typescript jsx
 <FieldSet name="Array of fields">
-    {['fieldOne', 'fieldTwo'].map((fieldName, index) => (
-        <Field name={fieldName} index={index}>...</Field>
-    ))}
+  {['fieldOne', 'fieldTwo'].map((fieldName, index) => (
+    <Field name={fieldName} index={index}>
+      ...
+    </Field>
+  ))}
 </FieldSet>
 ```
 
@@ -138,18 +140,34 @@ to grab needed state and interact with it freely.
 ## Common customization props
 
 Every component here has some props in common. What we are interested in, though,
-is those which you use for behaviour customization:
+are those which you use for behaviour customization:
 
 - `nameSeparator` - custom separator for your names. For example, by default
-we use `' '` to convert `field name` to `fieldName`.
-- `getValue` - a function that helps getting a proper value from an input when needed event
-fires.
-- `setValue` - a function that sets proper value on your input after it has been updated
-in the state.
-- `getters` - names of props we access on your input:
-    - `value`
-    - `defaultValue`
+  we use `' '` to convert `field name` to `fieldName`.
+- `getters` - names of props we access on your input: 
+    - `value` 
+    - `defaultValue` 
     - `event`
+    
+- `getValue` - a function that helps getting a proper value from an input when needed event
+  fires.
+- `setValue` - a function that sets proper value on your input after it has been updated
+  in the state.
+  
+About those last two. On the GIF below, we `getValue` **from** the input,
+convert it to `Base64`, put it in the form, then `setValue` **to** the
+input converted back to `UTF-8`.
+  
+![Example](https://media.giphy.com/media/YmnFz2Vp2NtLW6QWpy/giphy.gif)
+
+```typescript jsx
+<Field
+    getValue={({ target: { value = '' } }) => btoa(value)}
+    setValue={(value) => atob(value)}
+>
+    <input type="text" />
+</Field>
+```
 
 ## Contributing
 
