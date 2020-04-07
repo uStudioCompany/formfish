@@ -127,10 +127,6 @@ This will result in an array within your state:
 It automatically registers an input in the form, providing it
 with context about its value.
 
-By default, it gets `value`, `onChange` and `defaultValue` props of an
-input. This behaviour could be modified through `getters` prop, which
-accepts overrides for names of each of these values. 
-
 ## `watch`
 
 Every component in a `formfish` has build-in `watch` method
@@ -138,6 +134,22 @@ that grants access to its state.
 
 It accepts a function with a proper argument (TypeScript supported)
 to grab needed state and interact with it freely.
+
+## Common customization props
+
+Every component here has some props in common. What we are interested in, though,
+is those which you use for behaviour customization:
+
+- `nameSeparator` - custom separator for your names. For example, by default
+we use `' '` to convert `field name` to `fieldName`.
+- `getValue` - a function that helps getting a proper value from an input when needed event
+fires.
+- `setValue` - a function that sets proper value on your input after it has been updated
+in the state.
+- `getters` - names of props we access on your input:
+    - `value`
+    - `defaultValue`
+    - `event`
 
 ## Contributing
 
