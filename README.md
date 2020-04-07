@@ -48,8 +48,7 @@ in an object with the following scheme:
 {
     myLovelyForm: {
         firstField: {
-            name: 'firstField',
-            path: 'myLovelyForm.firstField'
+            name: 'First field',
             value: '' // or any defaultValue you pass to the input
         }
     }
@@ -72,8 +71,21 @@ If you'd like to somehow validate your form - use any method you find fit.
 
 If your validation is successful inside this callback, you pass!
 If it breaks, you should absolutely `throw` an `Error` object,
-containing the scheme we saw earlier on (the one our `Form` builds itself with)
+following the scheme we saw earlier on (the one our `Form` builds itself with)
 but with `error` field in each place the error popped up.
+
+For example, if we see our `First field` breaking the validation, the `onValidate`
+handler should throw an error with the following object inside:
+
+```typescript
+{
+    myLovelyForm: {
+        firstField: {
+            error: 'Oopsie!'
+        }
+    }
+}
+```
 
 After that, the state of errors gets merged with the form state and you
 can access and handle them freely.
@@ -103,7 +115,7 @@ This will produce a state with the following interface:
 ```
 
 Also it can be represented as an array of fields (**don't forget to pass
-`index` to each one of them!**):
+`index` to each one of those Fields!**):
 
 ```typescript jsx
 <FieldSet name="Array of fields">
@@ -129,32 +141,48 @@ This will result in an array within your state:
 It automatically registers an input in the form, providing it
 with context about its value.
 
+```typescript jsx
+<Field name="my-lovely-field">
+    <input type="text" />
+</Field>
+```
+
 ## `watch`
 
 Every component in a `formfish` has build-in `watch` method
 that grants access to its state.
 
-It accepts a function with a proper argument (TypeScript supported)
-to grab needed state and interact with it freely.
+It accepts a function with a state argument to grab needed state and interact 
+with it freely.
+
+```typescript jsx
+<Form watch={(state) => console.log(state)}> // Whole Form state
+    <FieldSet watch={(state) => console.log(state)}> // This particular FieldSet only
+        <Field watch={(state) => console.log(state)}> // This specific Field
+            // ...
+        </Form>
+    </FieldSet>
+</Form>
+```
 
 ## Common customization props
 
 Every component here has some props in common. What we are interested in, though,
-are those which you use for behaviour customization:
+are those which are used for behaviour customization:
 
-- `nameSeparator` - custom separator for your names. For example, by default
+- `nameSeparator` - custom separator for the names. For example, by default
   we use `' '` to convert `field name` to `fieldName`.
-- `getters` - names of props we access on your input: 
+- `getters` - names of props we access on the input: 
     - `value` 
     - `defaultValue` 
     - `event`
     
 - `getValue` - a function that helps getting a proper value from an input when needed event
   fires.
-- `setValue` - a function that sets proper value on your input after it has been updated
+- `setValue` - a function that sets proper value on the input after it's been updated
   in the state.
   
-About those last two. On the GIF below, we `getValue` **from** the input,
+On the GIF below, we `getValue` **from** the input,
 convert it to `Base64`, put it in the form, then `setValue` **to** the
 input converted back to `UTF-8`.
   
