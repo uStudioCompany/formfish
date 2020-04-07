@@ -6,9 +6,15 @@
  * @param separator Custom separator
  */
 const createFieldName = (name: string, separator: string): string => {
-  const arrayFromName = name.toLowerCase().split(separator);
+  const splitName = name.split(separator);
 
-  return `${arrayFromName[0]}${arrayFromName
+  if (splitName.length === 1) {
+    return name;
+  }
+
+  const lowercaseArray = splitName.map(word => word.toLowerCase());
+
+  return `${lowercaseArray[0]}${lowercaseArray
     .slice(1)
     .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
     .join('')}`;
