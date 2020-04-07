@@ -14,7 +14,7 @@ const App: React.FC = () => {
 
   const Deletable = ({ index }: { index: number }) => {
     return (
-      <Field name={`field-${index}`} getValue={encode} setValue={decode}>
+      <Field index={index} name={`field-${index}`} getValue={encode} setValue={decode}>
         <input type="text" />
       </Field>
     );
@@ -23,9 +23,9 @@ const App: React.FC = () => {
   return (
     <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
       <FieldSet name="deletables">
-        {deletables.map((id) => (
+        {deletables.map((id, index) => (
           <div key={id}>
-            <Deletable index={id} />
+            <Deletable index={index} />
 
             <button
               type="button"
@@ -38,6 +38,8 @@ const App: React.FC = () => {
           </div>
         ))}
       </FieldSet>
+  
+      <button>Submit</button>
     </Form>
   );
 };
