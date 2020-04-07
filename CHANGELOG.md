@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/uStudioCompany/formfish/compare/v0.3.1...v0.3.2) (2020-04-07)
+
+
+### Bug Fixes
+
+* Cleanup empty form members on submit ([8d637b7](https://github.com/uStudioCompany/formfish/commit/8d637b7dbb8d02db4041b8206dbd599615a04a94))
+
 ### [0.3.1](https://github.com/uStudioCompany/formfish/compare/v0.3.0...v0.3.1) (2020-04-07)
 
 
