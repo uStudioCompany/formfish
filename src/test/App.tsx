@@ -1,30 +1,42 @@
-import React, { ChangeEvent } from 'react';
-import { Field, FieldSet, Form } from '../index';
+import React, { useState } from 'react';
+import Field from '../components/Field';
+import FieldSet from '../components/FieldSet';
+import Form from '../components/Form';
+
+const encode = (value = '') => btoa(value);
+const decode = (value = '') => atob(value);
 
 const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => event.target.value;
+  const [deletables, setDeletables] = useState([1, 2, 3]);
+
+  const Deletable = ({ index }: { index: number }) => {
+    return (
+      <Field name={`field-${index}`} getValue={encode} setValue={decode}>
+        <input type="text" />
+      </Field>
+    );
+  };
 
   return (
-    <Form name="form" nameSeparator="-" onSubmit={handleSubmit} getValue={handleChange}>
-      <FieldSet name="field-array">
-        {['field-one', 'field-two', 'field-three'].map((name, index) => (
-          <Field name={name} index={index} key={name}>
-            <input type="text" />
-          </Field>
+    <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
+      <FieldSet name="deletables">
+        {deletables.map((id) => (
+          <div key={id}>
+            <Deletable index={id} />
+
+            <button
+              type="button"
+              onClick={() => {
+                setDeletables(deletables.filter(deletable => deletable !== id));
+              }}
+            >
+              Delete
+            </button>
+          </div>
         ))}
-      </FieldSet>
-
-      <FieldSet name="field object" nameSeparator=" ">
-        <Field name="field-four" nameSeparator="-">
-          <input type="text" />
-        </Field>
-
-        <Field name="field five">
-          <input type="text" />
-        </Field>
       </FieldSet>
     </Form>
   );

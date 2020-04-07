@@ -31,7 +31,7 @@ const Field: React.FC<FieldProps> = memo(
         }
       });
 
-      return (): void => dispatch({ type: 'unregister', payload: fieldPath });
+      return (): void => dispatch({ type: 'unregister', payload: { fieldPath, parentPath: path } });
     }, []);
 
     useEffect(() => {

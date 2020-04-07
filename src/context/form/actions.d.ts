@@ -9,7 +9,10 @@ interface Register {
 
 interface Unregister {
   type: 'unregister';
-  payload: string;
+  payload: {
+    fieldPath: string;
+    parentPath: string;
+  };
 }
 
 interface SetError {
