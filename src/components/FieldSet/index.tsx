@@ -49,6 +49,8 @@ const FieldSet: React.FC<FieldSetProps> = memo(
   }
 );
 
+FieldSet.displayName = 'FieldSet';
+
 FieldSet.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,

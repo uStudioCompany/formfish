@@ -10,36 +10,25 @@ const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
 
-  const [arr, setArr] = useState([0, 1, 2, 3, 4]);
-
   return (
     <Form
       name="form"
       nameSeparator="-"
       onSubmit={handleSubmit}
-      getValue={({ target: { value = '' } }) => encode(value)}
+      getValue={(value: string) => encode(value)}
       setValue={(value: string) => decode(value)}
     >
       <FieldSet name="topmost-array">
-        {arr.map(key => (
-          <div key={key}>
-            <FieldSet name="top-array" index={key}>
-              <Field index={0} name="top-field">
-                <input type="text" />
-              </Field>
+        <Field name="top-field">
+          <input type="text" />
+        </Field>
 
-              <FieldSet index={1} name="inside-array">
-                <Field index={0} name="inside-field">
-                  <input type="text" />
-                </Field>
-              </FieldSet>
-            </FieldSet>
-
-            <button type="button" onClick={() => setArr(arr.filter(id => id !== key))}>
-              Delete
-            </button>
-          </div>
-        ))}
+        <Field
+          name="inside-field"
+          renderInput={({ value = '', setValue }: { value: string; setValue: (value: string) => void }) => (
+            <input type="text" value={value} onChange={({ target: { value: inputValue } }) => setValue(inputValue)} />
+          )}
+        />
       </FieldSet>
 
       <button type="submit">Submit</button>

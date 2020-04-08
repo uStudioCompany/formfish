@@ -58,6 +58,8 @@ const Form: React.FC<FormProps> = ({
   );
 };
 
+Form.displayName = 'Form';
+
 Form.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,

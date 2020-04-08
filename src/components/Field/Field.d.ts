@@ -4,11 +4,7 @@ import { Watch } from '../../hooks/use-watch';
 import { CommonProps } from '../../types';
 
 export interface FieldProps extends CommonProps {
-  /**
-   * Only acceptable type of children is that containing value and onChange props inside of it.
-   * This allows to properly register and validate input in a Form
-   */
-  children: ReactElement;
+  children?: ReactElement;
   /**
    * Index to be accepted when used inside of an array
    */

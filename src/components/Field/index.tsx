@@ -1,4 +1,4 @@
-import React, { cloneElement, memo, useEffect, useState } from 'react';
+import React, { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useForm, usePath, commonPropTypes, useCommonProps } from '../../context';
@@ -18,21 +18,32 @@ const Field: React.FC<FieldProps> = memo(
     const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
     const fieldState = getState(fieldPath) as FormField;
 
+    const [isMounted, setMounted] = useState(false);
+
     const [inputValue, setInputValue] = useState<unknown>();
     const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
 
     useEffect(() => {
-      dispatch({
-        type: 'register',
-        payload: {
-          name,
-          path: fieldPath,
-          value: input.props?.[commonProps.getters.defaultValue]
-        }
-      });
+      if (input) {
+        setMounted(true);
+      }
 
-      return (): void => dispatch({ type: 'unregister', payload: { fieldPath } });
-    }, []);
+      if (isMounted) {
+        dispatch({
+          type: 'register',
+          payload: {
+            name,
+            path: fieldPath,
+            value: (input as ReactElement).props?.[commonProps.getters.defaultValue]
+          }
+        });
+      }
+
+      return (): void => {
+        setMounted(false);
+        dispatch({ type: 'unregister', payload: { fieldPath } });
+      };
+    }, [input, isMounted]);
 
     useEffect(() => {
       dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
@@ -53,7 +64,7 @@ const Field: React.FC<FieldProps> = memo(
       });
     }
 
-    return cloneElement(input, {
+    return cloneElement(input as ReactElement, {
       [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
       [commonProps.getters.event]: ({ target: { value } }: { target: { value: unknown } }) =>
         setInputValue(commonProps.getValue(value))
@@ -61,9 +72,12 @@ const Field: React.FC<FieldProps> = memo(
   }
 );
 
+Field.displayName = 'Field';
+
 Field.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element,
   index: PropTypes.number,
+  renderInput: PropTypes.func,
   ...commonPropTypes
 };
 
