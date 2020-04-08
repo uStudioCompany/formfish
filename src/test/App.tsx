@@ -10,36 +10,37 @@ const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
 
-  const [deletables, setDeletables] = useState([1, 2, 3]);
-
-  const Deletable = ({ index }: { index: number }) => {
-    return (
-      <Field index={index} name={`field-${index}`} getValue={encode} setValue={decode}>
-        <input type="text" />
-      </Field>
-    );
-  };
+  const [isTop, setTop] = useState(true);
 
   return (
-    <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
-      <FieldSet name="deletables">
-        {deletables.map((id, index) => (
-          <div key={id}>
-            <Deletable index={index} />
+    <Form
+      name="form"
+      nameSeparator="-"
+      onSubmit={handleSubmit}
+      getValue={({ target: { value = '' } }) => encode(value)}
+      setValue={(value: string) => decode(value)}
+    >
+      {isTop ? (
+        <FieldSet name="top-array">
+          <Field index={0} name="top-field">
+            <input type="text" />
+          </Field>
 
-            <button
-              type="button"
-              onClick={() => {
-                setDeletables(deletables.filter(deletable => deletable !== id));
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-      </FieldSet>
-  
-      <button>Submit</button>
+          <FieldSet index={1} name="inside-array">
+            <Field index={0} name="inside-field">
+              <input type="text" />
+            </Field>
+          </FieldSet>
+        </FieldSet>
+      ) : (
+        <></>
+      )}
+
+      <button type="button" onClick={() => setTop(false)}>
+        Delete top
+      </button>
+
+      <button type="submit">Submit</button>
     </Form>
   );
 };

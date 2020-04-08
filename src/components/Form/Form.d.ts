@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { ErrorState, FormState } from '../../context/form/FormContext';
+import { FormState } from '../../context/form/FormContext';
 import { Watch } from '../../hooks/use-watch';
 import { CommonProps } from '../../types';
 import { FlatState } from '../../utils/flatten-state';
@@ -18,7 +18,7 @@ export interface FormProps extends CommonProps {
    * Called with the Form state it should validate it and throw an error with proper interface
    * After throwing it dispatches an action that supplies ErrorState to the reducer
    */
-  onValidate?(state: FormState): ErrorState;
+  onValidate?(state: FlatState, context?: FormState): Error | void;
   watch?: Watch<FormState>;
   /**
    * For extension with styled-components or CSS classes

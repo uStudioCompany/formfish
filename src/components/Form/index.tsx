@@ -1,12 +1,12 @@
 import React, { FormEvent } from 'react';
 import PropTypes from 'prop-types';
 
-import FormContextProvider, { FormDispatchContext, FormStateContext } from '../../context/form';
-import { FormDispatchContextValue, FormState, FormStateContextValue } from '../../context/form/FormContext';
+import FormContextProvider, { FormStateContext } from '../../context/form';
+import { FieldSet, FormState, FormStateContextValue } from '../../context/form/FormContext';
 import PathContext from '../../context/path';
 import CommonPropsContext, { commonPropTypes } from '../../context/common-props';
-import { createFieldName } from '../../utils';
-import flattenState from '../../utils/flatten-state';
+import { cleanState, createFieldName, flattenState } from '../../utils';
+import { FlatState } from '../../utils/flatten-state';
 import { FormProps } from './Form';
 
 const Form: React.FC<FormProps> = ({
@@ -21,46 +21,37 @@ const Form: React.FC<FormProps> = ({
   nameSeparator = ' ',
   className = ''
 }) => {
-  const handleValidate = (state: FormState, dispatch: FormDispatchContextValue): void => {
-    try {
-      if (onValidate) {
-        onValidate(state);
+  const handleValidate = (flatState: FlatState, state: FormState): boolean => {
+    if (onValidate) {
+      try {
+        onValidate(flatState, state);
+      } catch (_) {
+        return false;
       }
-
-      onSubmit(flattenState(state), state);
-    } catch (errorState) {
-      dispatch({
-        type: 'set_error',
-        payload: errorState
-      });
     }
+
+    return true;
   };
 
-  const handleSubmit = (state: FormState, dispatch: FormDispatchContextValue) => (
-    event: FormEvent<HTMLFormElement>
-  ): void => {
+  const handleSubmit = (state: FormState) => (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    handleValidate(state, dispatch);
+    const flatState = flattenState(cleanState(state) as FieldSet);
+
+    if (handleValidate(flatState, state)) {
+      onSubmit(flatState, state);
+    }
   };
 
   return (
     <FormContextProvider watch={watch}>
       <FormStateContext.Consumer>
         {({ getState }: FormStateContextValue) => (
-          <FormDispatchContext.Consumer>
-            {(dispatch: FormDispatchContextValue) => (
-              <form
-                id={name}
-                className={className}
-                onSubmit={handleSubmit({ [name]: getState(name) } as FormState, dispatch)}
-              >
-                <CommonPropsContext.Provider value={{ getValue, setValue, nameSeparator, getters }}>
-                  <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
-                </CommonPropsContext.Provider>
-              </form>
-            )}
-          </FormDispatchContext.Consumer>
+          <form id={name} className={className} onSubmit={handleSubmit({ [name]: getState(name) } as FormState)}>
+            <CommonPropsContext.Provider value={{ getValue, setValue, nameSeparator, getters }}>
+              <PathContext.Provider value={createFieldName(name, nameSeparator)}>{form}</PathContext.Provider>
+            </CommonPropsContext.Provider>
+          </form>
         )}
       </FormStateContext.Consumer>
     </FormContextProvider>

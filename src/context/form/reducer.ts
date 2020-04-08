@@ -1,6 +1,5 @@
 import set from 'lodash.set';
 import get from 'lodash.get';
-import merge from 'lodash.merge';
 
 import { FormAction } from './actions';
 import { FieldSet, FormMember, FormState } from './FormContext';
@@ -34,9 +33,6 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
       return {
         ...set(state, parentPath, parent)
       };
-    }
-    case 'set_error': {
-      return merge({ ...state }, action.payload);
     }
     default: {
       return state;

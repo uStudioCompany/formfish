@@ -1,6 +1,6 @@
-import { ErrorState, Input } from './FormContext';
+import { Input } from './FormContext';
 
-export type FormAction = Register | Unregister | SetError;
+export type FormAction = Register | Unregister;
 
 interface Register {
   type: 'register';
@@ -13,9 +13,4 @@ interface Unregister {
     fieldPath: string;
     parentPath: string;
   };
-}
-
-interface SetError {
-  type: 'set_error';
-  payload: ErrorState;
 }
