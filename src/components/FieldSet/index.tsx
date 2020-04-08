@@ -9,45 +9,53 @@ import FieldSetContext from './context';
 import { useWatch } from '../../hooks';
 import { FieldSetProps } from './FieldSet';
 
-const FieldSet: React.FC<FieldSetProps> = memo(
-  ({ children: fields, name, watch, index, getValue, setValue, nameSeparator, getters, className = '' }) => {
-    const path = usePath();
-    const { getState, dispatch } = useForm();
-    const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
+const FieldSet: React.FC<FieldSetProps> = ({
+  children: fields,
+  name,
+  watch,
+  index,
+  getValue,
+  setValue,
+  nameSeparator,
+  getters,
+  className = ''
+}) => {
+  const path = usePath();
+  const { getState, dispatch } = useForm();
+  const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-    const fieldSetPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
-    const fieldSetState = getState(fieldSetPath);
+  const fieldSetPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
+  const fieldSetState = getState(fieldSetPath);
 
-    const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
+  const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
 
-    const subscribe = (): void => {
-      setNewFieldSetState(Array.isArray(fieldSetState) ? [...fieldSetState] : { ...fieldSetState });
+  const subscribe = (): void => {
+    setNewFieldSetState(Array.isArray(fieldSetState) ? [...fieldSetState] : { ...fieldSetState });
+  };
+
+  useWatch(newFieldSetState, watch);
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: 'unregister',
+        payload: {
+          fieldPath: fieldSetPath
+        }
+      });
     };
+  }, []);
 
-    useWatch(newFieldSetState, watch);
-
-    useEffect(() => {
-      return () => {
-        dispatch({
-          type: 'unregister',
-          payload: {
-            fieldPath: fieldSetPath
-          }
-        });
-      };
-    }, []);
-
-    return (
-      <div className={className}>
-        <FieldSetContext.Provider value={subscribe}>
-          <CommonPropsContext.Provider value={commonProps}>
-            <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
-          </CommonPropsContext.Provider>
-        </FieldSetContext.Provider>
-      </div>
-    );
-  }
-);
+  return (
+    <div className={className}>
+      <FieldSetContext.Provider value={subscribe}>
+        <CommonPropsContext.Provider value={commonProps}>
+          <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
+        </CommonPropsContext.Provider>
+      </FieldSetContext.Provider>
+    </div>
+  );
+};
 
 FieldSet.displayName = 'FieldSet';
 
@@ -65,4 +73,4 @@ FieldSet.defaultProps = {
   className: ''
 };
 
-export default FieldSet;
+export default memo(FieldSet);

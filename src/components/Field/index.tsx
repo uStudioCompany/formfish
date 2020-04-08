@@ -8,69 +8,77 @@ import { createFieldPath } from '../../utils';
 import { useFieldSetContext } from '../FieldSet/context';
 import { FieldProps } from './Field';
 
-const Field: React.FC<FieldProps> = memo(
-  ({ children: input, name, watch, renderInput, getValue, setValue, nameSeparator, getters, index }) => {
-    const path = usePath();
-    const subscribe = useFieldSetContext();
-    const { getState, dispatch } = useForm();
-    const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
+const Field: React.FC<FieldProps> = ({
+  children: input,
+  name,
+  watch,
+  renderInput,
+  getValue,
+  setValue,
+  nameSeparator,
+  getters,
+  index
+}) => {
+  const path = usePath();
+  const subscribe = useFieldSetContext();
+  const { getState, dispatch } = useForm();
+  const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-    const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
-    const fieldState = getState(fieldPath) as FormField;
+  const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
+  const fieldState = getState(fieldPath) as FormField;
 
-    const [isMounted, setMounted] = useState(false);
+  const [isMounted, setMounted] = useState(false);
 
-    const [inputValue, setInputValue] = useState<unknown>();
-    const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
+  const [inputValue, setInputValue] = useState<unknown>();
+  const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
 
-    useEffect(() => {
-      if (input) {
-        setMounted(true);
-      }
+  useEffect(() => {
+    if (input) {
+      setMounted(true);
+    }
 
-      if (isMounted) {
-        dispatch({
-          type: 'register',
-          payload: {
-            name,
-            path: fieldPath,
-            value: (input as ReactElement).props?.[commonProps.getters.defaultValue]
-          }
-        });
-      }
-
-      return (): void => {
-        setMounted(false);
-        dispatch({ type: 'unregister', payload: { fieldPath } });
-      };
-    }, [input, isMounted]);
-
-    useEffect(() => {
-      dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
-
-      setNewFieldState({ ...fieldState, value: inputValue });
-
-      if (subscribe) {
-        subscribe();
-      }
-    }, [inputValue]);
-
-    useWatch(newFieldState, watch);
-
-    if (renderInput) {
-      return renderInput({
-        value: fieldState?.value,
-        setValue: renderInputValue => setInputValue(renderInputValue)
+    if (isMounted) {
+      dispatch({
+        type: 'register',
+        payload: {
+          name,
+          path: fieldPath,
+          value: (input as ReactElement).props?.[commonProps.getters.defaultValue]
+        }
       });
     }
 
-    return cloneElement(input as ReactElement, {
-      [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
-      [commonProps.getters.event]: ({ target: { value } }: { target: { value: unknown } }) =>
-        setInputValue(commonProps.getValue(value))
+    return (): void => {
+      setMounted(false);
+      dispatch({ type: 'unregister', payload: { fieldPath } });
+    };
+  }, [input, isMounted]);
+
+  useEffect(() => {
+    dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
+
+    setNewFieldState({ ...fieldState, value: inputValue });
+
+    if (subscribe) {
+      subscribe();
+    }
+  }, [inputValue]);
+
+  useWatch(newFieldState, watch);
+
+  if (renderInput) {
+    return renderInput({
+      value: fieldState?.value,
+      setValue: renderInputValue => setInputValue(renderInputValue)
     });
   }
-);
+
+  return cloneElement(input as ReactElement, {
+    [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
+    [commonProps.getters.event]: ({ target: { value } }: { target: { value: unknown } }) =>
+      setInputValue(commonProps.getValue(value))
+  });
+};
 
 Field.displayName = 'Field';
 
@@ -89,4 +97,4 @@ Field.defaultProps = {
   }
 };
 
-export default Field;
+export default memo(Field);
