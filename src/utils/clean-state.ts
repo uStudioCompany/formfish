@@ -20,22 +20,22 @@ function cleanState(state: FieldSet | FieldArray): FormMember {
     }, []);
   }
 
-  return Object.keys(state as FieldSet).reduce((object: FieldSet, key) => {
+  return Object.keys(state as FieldSet).reduce((set: FieldSet, key) => {
     const member = state[key];
 
     if (!member) {
-      return object;
+      return set;
     }
 
     if (!isField(member)) {
       if (Object.keys(cleanState(member)).length) {
-        return Object.assign(object, { [key]: member });
+        return Object.assign(set, { [key]: member });
       }
 
-      return object;
+      return set;
     }
 
-    return Object.assign(object, { [key]: member });
+    return Object.assign(set, { [key]: member });
   }, {});
 }
 

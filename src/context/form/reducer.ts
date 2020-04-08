@@ -1,8 +1,8 @@
 import set from 'lodash.set';
-import get from 'lodash.get';
+import unset from 'lodash.unset';
 
 import { FormAction } from './actions';
-import { FieldSet, FormMember, FormState } from './FormContext';
+import { FormState } from './FormContext';
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
   switch (action.type) {
@@ -11,28 +11,11 @@ const formReducer = (state: FormState, action: FormAction): FormState => {
       return { ...set(state, path, input) };
     }
     case 'unregister': {
-      const { fieldPath, parentPath } = action.payload;
-      const diff = fieldPath.replace(parentPath, '');
+      const { fieldPath } = action.payload;
 
-      const parentEntity = get(state, parentPath);
+      unset(state, fieldPath);
 
-      if (diff.includes('[')) {
-        const childIndex = +diff.slice(1, diff.indexOf(']'));
-
-        return {
-          ...set(state, parentPath, [
-            ...(parentEntity as FormMember[]).slice(0, childIndex),
-            ...(parentEntity as FormMember[]).slice(childIndex + 1)
-          ])
-        };
-      }
-
-      const childName = diff.slice(1);
-      const { [childName]: _, ...parent } = parentEntity as FieldSet;
-
-      return {
-        ...set(state, parentPath, parent)
-      };
+      return { ...state };
     }
     default: {
       return state;

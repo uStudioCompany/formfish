@@ -11,6 +11,5 @@ interface Unregister {
   type: 'unregister';
   payload: {
     fieldPath: string;
-    parentPath: string;
   };
 }

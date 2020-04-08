@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CommonPropsContext from '../../context/common-props';
@@ -12,7 +12,7 @@ import { FieldSetProps } from './FieldSet';
 const FieldSet: React.FC<FieldSetProps> = memo(
   ({ children: fields, name, watch, index, getValue, setValue, nameSeparator, getters, className = '' }) => {
     const path = usePath();
-    const { getState } = useForm();
+    const { getState, dispatch } = useForm();
     const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
     const fieldSetPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
@@ -25,6 +25,17 @@ const FieldSet: React.FC<FieldSetProps> = memo(
     };
 
     useWatch(newFieldSetState, watch);
+
+    useEffect(() => {
+      return () => {
+        dispatch({
+          type: 'unregister',
+          payload: {
+            fieldPath: fieldSetPath
+          }
+        });
+      };
+    }, []);
 
     return (
       <div className={className}>

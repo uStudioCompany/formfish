@@ -14,6 +14,10 @@ function flattenFieldSet(fieldSet: FieldSet): FlatState {
   return Object.keys(fieldSet).reduce((set, key) => {
     const member = fieldSet[key];
 
+    if (!member) {
+      return set;
+    }
+
     if (isFieldSet(member)) {
       return Object.assign(set, { [key]: flattenFieldSet(member) });
     }
@@ -28,17 +32,21 @@ function flattenFieldSet(fieldSet: FieldSet): FlatState {
 }
 
 function flattenFieldArray(fieldArray: FieldArray): FlatState {
-  return fieldArray.map(member => {
+  return fieldArray.reduce((array: FieldArray, member) => {
+    if (!member) {
+      return array;
+    }
+
     if (isFieldSet(member)) {
-      return flattenFieldSet(member);
+      return [...array, flattenFieldSet(member)];
     }
 
     if (isFieldArray(member)) {
-      return flattenFieldArray(member);
+      return [...array, flattenFieldArray(member)];
     }
 
-    return (member as Field).value;
-  });
+    return [...array, (member as Field).value];
+  }, []);
 }
 
 const flattenState = (state: FormState): FlatState => {
