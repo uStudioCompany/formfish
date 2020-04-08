@@ -14,4 +14,8 @@ export interface FieldProps extends CommonProps {
    */
   index?: number;
   watch?: Watch<Field>;
+  /**
+   * Alternative approach to render input inside the Field
+   */
+  renderInput?({ value, setValue }: { value: unknown; setValue: (value: unknown) => void }): ReactElement;
 }

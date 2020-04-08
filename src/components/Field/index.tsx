@@ -9,7 +9,7 @@ import { useFieldSetContext } from '../FieldSet/context';
 import { FieldProps } from './Field';
 
 const Field: React.FC<FieldProps> = memo(
-  ({ children: input, name, watch, getValue, setValue, nameSeparator, getters, index }) => {
+  ({ children: input, name, watch, renderInput, getValue, setValue, nameSeparator, getters, index }) => {
     const path = usePath();
     const subscribe = useFieldSetContext();
     const { getState, dispatch } = useForm();
@@ -46,9 +46,17 @@ const Field: React.FC<FieldProps> = memo(
 
     useWatch(newFieldState, watch);
 
+    if (renderInput) {
+      return renderInput({
+        value: fieldState?.value,
+        setValue: renderInputValue => setInputValue(renderInputValue)
+      });
+    }
+
     return cloneElement(input, {
       [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
-      [commonProps.getters.event]: (state?: unknown) => setInputValue(commonProps.getValue(state))
+      [commonProps.getters.event]: ({ target: { value } }: { target: { value: unknown } }) =>
+        setInputValue(commonProps.getValue(value))
     });
   }
 );
