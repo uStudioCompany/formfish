@@ -56,7 +56,8 @@ in an object with the following scheme:
 ```
 
 After you are done with this form, submit it by passing a callback to the
-`onSubmit` `Form` prop.
+`onSubmit` `Form` prop. The callback signature of this function is better
+explained in the **Validation** section.
 
 Note, that `onSubmit` fires upon native form's submission, so you could
 just place a button inside a form it works just right!
@@ -67,28 +68,13 @@ to provide them with needed state. Use any level of depth - it won't break!
 ### Validation
 
 If you'd like to somehow validate your form - use any method you find fit.
-`Form` component has a built-in method `onValidate` that accepts a special callback.
+`Form` component has a built-in method `onValidate` that accepts a special callback
+with "minified" state, that turns every field into a `name: value` pair inside of objects,
+or just `value` inside of arrays. Also, it optionally passes the state from the context
+as the second argument. **The same signature applies to `onSubmit`**.
 
-If your validation is successful inside this callback, you pass!
-If it breaks, you should absolutely `throw` an `Error` object,
-following the scheme we saw earlier on (the one our `Form` builds itself with)
-but with `error` field in each place the error popped up.
-
-For example, if we see our `First field` breaking the validation, the `onValidate`
-handler should throw an error with the following object inside:
-
-```typescript
-{
-    myLovelyForm: {
-        firstField: {
-            error: 'Oopsie!'
-        }
-    }
-}
-```
-
-After that, the state of errors gets merged with the form state and you
-can access and handle them freely.
+Make sure to **throw an Error** when handling your validation as this will cause
+`onSubmit` to not be called if something goes wrong.
 
 ### `FieldSet`
 
@@ -114,7 +100,7 @@ This will produce a state with the following interface:
 }
 ```
 
-Also it can be represented as an array of fields or field sets
+Also, it can be represented as an array of fields or field sets
 (**don't forget to pass `index` to each one of those Fields/FieldSets!**):
 
 ```typescript jsx
@@ -143,16 +129,36 @@ with context about its value.
 
 ```typescript jsx
 <Field name="my-lovely-field">
-    <input type="text" />
+  <input type="text" />
 </Field>
 ```
+
+Instead of passing a child component inside, it is also possible to pass a `renderInput`
+prop to the `Field`, which is called with `value` and `setValue` props, that you later
+use on your input.
+
+```typescript jsx
+<Field
+  name="my-lovely-field"
+  renderInput={({ value, setValue }) => (
+    <input type="text" value={value} onBlur={({ target: { value: inputValue } }) => setValue(inputValue)} />
+  )}
+/>
+```
+
+**If you are using a native input, make sure to pass some default
+values to the callback functions, as otherwise it will
+throw a controlled/uncontrolled error.**
+
+Also, note that `renderInput` is not affected by **Common customization
+props**.
 
 ## `watch`
 
 Every component in a `formfish` has build-in `watch` method
 that grants access to its state.
 
-It accepts a function with a state argument to grab needed state and interact 
+It accepts a function with a state argument to grab needed state and interact
 with it freely.
 
 ```typescript jsx
@@ -172,30 +178,29 @@ are those which are used for behaviour customization:
 
 - `nameSeparator` - custom separator for the names. For example, by default
   we use `' '` to convert `field name` to `fieldName`.
-- `getters` - names of props we access on the input: 
-    - `value` 
-    - `defaultValue` 
-    - `event`
-    
+- `getters` - names of props we access on the input:
+  - `value`
+  - `defaultValue`
+  - `event`
 - `getValue` - a function that helps getting a proper value from an input when needed event
   fires.
 - `setValue` - a function that sets proper value on the input after it's been updated
   in the state.
-  
+
 On the GIF below, we `getValue` **from** the input,
 convert it to `Base64`, put it in the form, then `setValue` **to** the
 input converted back to `UTF-8`.
-  
+
 ![Example](https://media.giphy.com/media/YmnFz2Vp2NtLW6QWpy/giphy.gif)
 
 ```typescript jsx
-<Field
-    getValue={({ target: { value = '' } }) => btoa(value)}
-    setValue={(value) => atob(value)}
->
-    <input type="text" />
+<Field getValue={value => btoa(value)} setValue={value => atob(value)}>
+  <input type="text" />
 </Field>
 ```
+
+By default, `getValue`'s signature already uses that of a native event's
+callback.
 
 ## Contributing
 
