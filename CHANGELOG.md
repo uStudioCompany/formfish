@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/uStudioCompany/formfish/compare/v0.3.2...v0.4.0) (2020-04-08)
+
+
+### Features
+
+* Add clean state function, refactor validation logic ([5471bfe](https://github.com/uStudioCompany/formfish/commit/5471bfef5e9f1903a443698a3a308ee6c29ad8e2))
+* Add displayName ([bcbdae6](https://github.com/uStudioCompany/formfish/commit/bcbdae636be00cd3ae2090b619aca942fafd404c))
+* Add renderInput method to Field ([50cf6d1](https://github.com/uStudioCompany/formfish/commit/50cf6d1459bf618337713cf2a57d2bd201e86e6b))
+
+
+### Bug Fixes
+
+* Change unregister action flow ([989a139](https://github.com/uStudioCompany/formfish/commit/989a139c7463fbe0a2500add9a40f67580ec17ae))
+
 ### [0.3.2](https://github.com/uStudioCompany/formfish/compare/v0.3.1...v0.3.2) (2020-04-07)
 
 
