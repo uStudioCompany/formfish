@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/uStudioCompany/formfish/compare/v0.4.0...v0.4.1) (2020-04-08)
+
+
+### Bug Fixes
+
+* Move React.memo into default export ([caa42df](https://github.com/uStudioCompany/formfish/commit/caa42df92b311935b8db66eea29fc82db2d679d5))
+
 ## [0.4.0](https://github.com/uStudioCompany/formfish/compare/v0.3.2...v0.4.0) (2020-04-08)
 
 
