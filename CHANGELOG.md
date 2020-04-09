@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/uStudioCompany/formfish/compare/v0.4.1...v0.5.0) (2020-04-09)
+
+
+### Features
+
+* Expose useForm hook ([1f2c189](https://github.com/uStudioCompany/formfish/commit/1f2c18905a77a0a1a15dc629327bbcc11902f723))
+
 ### [0.4.1](https://github.com/uStudioCompany/formfish/compare/v0.4.0...v0.4.1) (2020-04-08)
 
 
