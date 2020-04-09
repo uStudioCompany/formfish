@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CommonPropsContext from '../../context/common-props';
-import { useForm, usePath, commonPropTypes, useCommonProps } from '../../context';
+import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
 import PathContext from '../../context/path';
 import { createFieldPath } from '../../utils';
 import FieldSetContext from './context';
@@ -21,7 +21,7 @@ const FieldSet: React.FC<FieldSetProps> = ({
   className = ''
 }) => {
   const path = usePath();
-  const { getState, dispatch } = useForm();
+  const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
   const fieldSetPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });

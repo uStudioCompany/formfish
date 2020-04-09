@@ -171,6 +171,14 @@ with it freely.
 </Form>
 ```
 
+## `useForm`
+
+Another method to grab a state of a certain component is to use our `useForm`
+hook inside your components that dwell inside the `Form`.
+
+It exposes the `getState` function from the context that accepts 
+`lodash`-like path and returns the state of a component by this path.
+
 ## Common customization props
 
 Every component here has some props in common. What we are interested in, though,

@@ -1,7 +1,7 @@
 import React, { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useForm, usePath, commonPropTypes, useCommonProps } from '../../context';
+import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
 import { Field as FormField } from '../../context/form/FormContext';
 import { useWatch } from '../../hooks';
 import { createFieldPath } from '../../utils';
@@ -21,7 +21,7 @@ const Field: React.FC<FieldProps> = ({
 }) => {
   const path = usePath();
   const subscribe = useFieldSetContext();
-  const { getState, dispatch } = useForm();
+  const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
   const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
