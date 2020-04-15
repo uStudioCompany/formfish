@@ -21,6 +21,10 @@ export interface FormProps extends CommonProps {
   onValidate?(state: FlatState, context?: FormState): Error | void;
   watch?: Watch<FormState>;
   /**
+   * Initial state to pass on to context
+   */
+  initialState?: FormState;
+  /**
    * For extension with styled-components or CSS classes
    */
   className?: string;

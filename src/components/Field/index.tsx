@@ -29,7 +29,7 @@ const Field: React.FC<FieldProps> = ({
 
   const [isMounted, setMounted] = useState(false);
 
-  const [inputValue, setInputValue] = useState<unknown>();
+  const [inputValue, setInputValue] = useState<unknown>(fieldState?.value);
   const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Field: React.FC<FieldProps> = ({
         payload: {
           name,
           path: fieldPath,
-          value: (input as ReactElement).props?.[commonProps.getters.defaultValue]
+          value: inputValue
         }
       });
     }
@@ -74,7 +74,7 @@ const Field: React.FC<FieldProps> = ({
   }
 
   return cloneElement(input as ReactElement, {
-    [commonProps.getters.value]: commonProps.setValue(fieldState?.value),
+    [commonProps.getters.value]: commonProps.setValue(inputValue),
     [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value))
   });
 };

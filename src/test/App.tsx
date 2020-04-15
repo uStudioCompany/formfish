@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Field from '../components/Field';
 import FieldSet from '../components/FieldSet';
 import Form from '../components/Form';
 
-const encode = (value = '') => btoa(value);
-const decode = (value = '') => atob(value);
+const encode = (value = '') => value;
+const decode = (value = '') => value;
 
 const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
+  
+  const [val, setVal] = useState('');
 
   return (
     <Form
@@ -17,6 +19,16 @@ const App: React.FC = () => {
       onSubmit={handleSubmit}
       getValue={({ target: { value } }) => encode(value)}
       setValue={(value: string) => decode(value)}
+      initialState={{
+        form: {
+          topmostArray: {
+            topField: {
+              name: 'top-field',
+              value: 'blablaljasfljnl14njlnbljasf'
+            }
+          }
+        }
+      }}
     >
       <FieldSet name="topmost-array">
         <Field name="top-field">
@@ -30,6 +42,8 @@ const App: React.FC = () => {
           )}
         />
       </FieldSet>
+
+      <input type="text" value={val} onChange={({ target: { value } }) => setVal(value)} />
 
       <button type="submit">Submit</button>
     </Form>

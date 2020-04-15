@@ -7,8 +7,6 @@ import { FormStateContextValue } from '../context/form/FormContext';
  *
  * @return getState function from form context
  */
-const useForm = (): FormStateContextValue['getState'] => {
-  return useFormContext().getState;
-};
+const useForm = (): FormStateContextValue['getState'] => useFormContext().getState;
 
 export default useForm;

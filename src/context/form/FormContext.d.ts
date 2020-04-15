@@ -5,6 +5,7 @@ import { FormAction } from './actions';
 
 export interface FormContextProviderProps {
   watch: FormProps['watch'];
+  initialState?: FormState;
 }
 
 export type FormDispatchContextValue = Dispatch<FormAction>;

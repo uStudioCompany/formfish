@@ -15,8 +15,12 @@ import formReducer from './reducer';
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
 export const FormDispatchContext = createContext<FormDispatchContextValue | undefined>(undefined);
 
-const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>> = ({ children, watch }) => {
-  const [formState, dispatch] = useReducer(formReducer, {});
+const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>> = ({
+  children,
+  watch,
+  initialState = {}
+}) => {
+  const [formState, dispatch] = useReducer(formReducer, initialState);
 
   const state = useMemo<FormState>(() => formState, [formState]);
 

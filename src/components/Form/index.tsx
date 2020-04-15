@@ -15,6 +15,7 @@ const Form: React.FC<FormProps> = ({
   onSubmit,
   onValidate,
   watch,
+  initialState,
   getValue,
   setValue,
   getters,
@@ -44,7 +45,7 @@ const Form: React.FC<FormProps> = ({
   };
 
   return (
-    <FormContextProvider watch={watch}>
+    <FormContextProvider watch={watch} initialState={initialState}>
       <FormStateContext.Consumer>
         {({ getState }: FormStateContextValue) => (
           <form id={name} className={className} onSubmit={handleSubmit({ [name]: getState(name) } as FormState)}>
