@@ -1,4 +1,4 @@
-import React, { cloneElement, memo, ReactElement, useEffect, useState } from 'react';
+import React, { cloneElement, ReactElement, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
@@ -96,4 +96,4 @@ Field.defaultProps = {
   }
 };
 
-export default memo(Field);
+export default Field;

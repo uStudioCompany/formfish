@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CommonPropsContext from '../../context/common-props';
@@ -73,4 +73,4 @@ FieldSet.defaultProps = {
   className: ''
 };
 
-export default memo(FieldSet);
+export default FieldSet;
