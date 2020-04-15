@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/uStudioCompany/formfish/compare/v0.5.1...v0.6.0) (2020-04-15)
+
+
+### Features
+
+* Pass `id` to the input ([abb4782](https://github.com/uStudioCompany/formfish/commit/abb478282a1c0a98a3218e0112617e243fd79a98))
+* Remove React.memo exports ([d5dc15f](https://github.com/uStudioCompany/formfish/commit/d5dc15ff197369fff57cd4ec016ea19e9bc18251))
+
+
+### Bug Fixes
+
+* **Field:** give proper value back to the input ([f3a7fdc](https://github.com/uStudioCompany/formfish/commit/f3a7fdc8943a9137d67845af4f61a53450fe4aa5))
+
 ### [0.5.1](https://github.com/uStudioCompany/formfish/compare/v0.5.0...v0.5.1) (2020-04-15)
 
 

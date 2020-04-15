@@ -1,7 +1,7 @@
 {
   "name": "formfish",
   "description": "React Context Form Engine",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "uStudio Front-End Department",
   "repository": "github:uStudioCompany/formfish",
   "license": "MIT",
