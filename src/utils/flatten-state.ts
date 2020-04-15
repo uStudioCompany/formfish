@@ -8,7 +8,7 @@ export type FlatState =
   | { [name: string]: FlatState[] }
   | FlatState[];
 
-const flattenField = (field: Field): { [name: string]: unknown } => ({ [field.name]: field.value });
+const flattenField = (field: Field): { [name: string]: unknown } => ({ [field.name as string]: field.value });
 
 function flattenFieldSet(fieldSet: FieldSet): FlatState {
   return Object.keys(fieldSet).reduce((set, key) => {
