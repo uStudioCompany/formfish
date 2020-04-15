@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/uStudioCompany/formfish/compare/v0.5.0...v0.5.1) (2020-04-15)
+
+
+### Bug Fixes
+
+* **getValue:** return clean value from the input ([7b37ab0](https://github.com/uStudioCompany/formfish/commit/7b37ab0417d8fa1e9ef57daaab417fc43e7ff47e))
+
 ## [0.5.0](https://github.com/uStudioCompany/formfish/compare/v0.4.1...v0.5.0) (2020-04-09)
 
 
