@@ -75,7 +75,8 @@ const Field: React.FC<FieldProps> = ({
 
   return cloneElement(input as ReactElement, {
     [commonProps.getters.value]: commonProps.setValue(inputValue),
-    [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value))
+    [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value)),
+    [commonProps.getters.id]: fieldState?.name
   });
 };
 

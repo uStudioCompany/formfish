@@ -190,6 +190,7 @@ are those which are used for behaviour customization:
   - `value`
   - `defaultValue`
   - `event`
+  - `id`
 - `getValue` - a function that helps getting a proper value from an input when needed event
   fires.
 - `setValue` - a function that sets proper value on the input after it's been updated

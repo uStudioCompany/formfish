@@ -8,7 +8,9 @@ const CommonPropsContext = createContext<CommonPropsContextValue | undefined>(un
 
 export const useCommonProps = (
   props: CommonPropsContextValue
-): Required<CommonPropsContextValue> & { getters: Required<CommonPropsContextValue['getters']> } => {
+): Required<CommonPropsContextValue> & {
+  getters: Required<CommonPropsContextValue['getters']>;
+} => {
   const commonProps = useContext(CommonPropsContext);
 
   if (commonProps === undefined) {
@@ -21,7 +23,7 @@ export const useCommonProps = (
     nameSeparator = ' ',
     getters = {}
   } = commonProps;
-  const { value = 'value', defaultValue = 'defaultValue', event = 'onChange' } = getters;
+  const { value = 'value', defaultValue = 'defaultValue', event = 'onChange', id = 'id' } = getters;
 
   return {
     getValue: props?.getValue || getValue,
@@ -30,7 +32,8 @@ export const useCommonProps = (
     getters: {
       value: props?.getters?.value || value,
       defaultValue: props?.getters?.defaultValue || defaultValue,
-      event: props?.getters?.event || event
+      event: props?.getters?.event || event,
+      id: props?.getters?.id || id
     }
   };
 };

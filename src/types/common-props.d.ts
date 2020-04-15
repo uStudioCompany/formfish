@@ -38,5 +38,9 @@ export interface CommonProps {
      *  Input's onChange prop title
      */
     event?: string;
+    /**
+     * Identifier to pass to the input
+     */
+    id?: string | number;
   };
 }
