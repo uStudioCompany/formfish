@@ -210,6 +210,28 @@ input converted back to `UTF-8`.
 By default, `getValue`'s signature already uses that of a native event's
 callback.
 
+## `initialState`
+
+`Form` component accepts another valuable prop - `initialState`. You can pass an object
+that represents the state you build in the JSX markup that gets populated onto the inputs.
+
+```typescript jsx
+<Form
+    name="form"
+    initialState={
+        form: {
+            initiate: {
+                value: 'Initiated!'
+            }
+        }
+    }
+>
+    <Field name="initiate">
+        <input type="text" /> // input here gets the 'Initiated!' value
+    </Field>
+</Form>
+```
+
 ## Contributing
 
 If you are willing to become a contributor to this project or just have

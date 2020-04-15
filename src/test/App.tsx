@@ -9,7 +9,7 @@ const decode = (value = '') => value;
 const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
-  
+
   const [val, setVal] = useState('');
 
   return (
@@ -23,7 +23,6 @@ const App: React.FC = () => {
         form: {
           topmostArray: {
             topField: {
-              name: 'top-field',
               value: 'blablaljasfljnl14njlnbljasf'
             }
           }

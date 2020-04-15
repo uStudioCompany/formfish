@@ -15,7 +15,7 @@ export interface FormStateContextValue {
 }
 
 export interface Field {
-  name: string;
+  name?: string;
   value: unknown | undefined;
 }
 
