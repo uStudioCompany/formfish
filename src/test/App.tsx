@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Field from '../components/Field';
 import FieldSet from '../components/FieldSet';
 import Form from '../components/Form';
@@ -15,7 +15,7 @@ const App: React.FC = () => {
       name="form"
       nameSeparator="-"
       onSubmit={handleSubmit}
-      getValue={(value: string) => encode(value)}
+      getValue={({ target: { value } }) => encode(value)}
       setValue={(value: string) => decode(value)}
     >
       <FieldSet name="topmost-array">
