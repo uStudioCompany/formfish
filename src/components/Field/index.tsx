@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactElement, useEffect, useState } from 'react';
+import React, { cloneElement, ReactElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
@@ -29,15 +29,25 @@ const Field: React.FC<FieldProps> = ({
 
   const [isMounted, setMounted] = useState(false);
 
-  const [inputValue, setInputValue] = useState<unknown>(fieldState?.value);
+  const [renderedInput, setRenderedInput] = useState<ReactElement | undefined>(undefined);
+  const [inputValue, setInputValue] = useState<unknown>(
+    fieldState?.value || input?.props?.[commonProps.getters.defaultValue]
+  );
   const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
 
   useEffect(() => {
-    if (input) {
+    if (renderedInput) {
+      setInputValue(fieldState?.value || renderedInput?.props?.[commonProps.getters.defaultValue]);
+    }
+  }, [renderedInput]);
+
+  useEffect(() => {
+    if (input || renderedInput) {
       setMounted(true);
+      setNewFieldState(fieldState);
     }
 
-    if (isMounted) {
+    if ((input || renderedInput) && isMounted) {
       dispatch({
         type: 'register',
         payload: {
@@ -57,7 +67,9 @@ const Field: React.FC<FieldProps> = ({
   useEffect(() => {
     dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
 
-    setNewFieldState({ ...fieldState, value: inputValue });
+    if (fieldState?.value !== inputValue) {
+      setNewFieldState({ ...fieldState, value: inputValue });
+    }
 
     if (subscribe) {
       subscribe();
@@ -67,10 +79,16 @@ const Field: React.FC<FieldProps> = ({
   useWatch(newFieldState, watch);
 
   if (renderInput) {
-    return renderInput({
-      value: fieldState?.value,
-      setValue: renderInputValue => setInputValue(renderInputValue)
+    const prerenderedInput = renderInput({
+      value: inputValue,
+      setValue: value => setInputValue(value)
     });
+
+    if (!renderedInput) {
+      setRenderedInput(prerenderedInput);
+    }
+
+    return prerenderedInput;
   }
 
   return cloneElement(input as ReactElement, {

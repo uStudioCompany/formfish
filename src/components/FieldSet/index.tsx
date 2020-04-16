@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import CommonPropsContext from '../../context/common-props';
@@ -29,9 +29,18 @@ const FieldSet: React.FC<FieldSetProps> = ({
 
   const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
 
-  const subscribe = (): void => {
-    setNewFieldSetState(Array.isArray(fieldSetState) ? [...fieldSetState] : { ...fieldSetState });
-  };
+  const subscribe = useMemo(
+    () => (): void => {
+      setNewFieldSetState(prevFieldSetState => {
+        if (JSON.stringify(prevFieldSetState) !== JSON.stringify(fieldSetState)) {
+          return Array.isArray(fieldSetState) ? [...fieldSetState] : { ...fieldSetState };
+        }
+
+        return prevFieldSetState;
+      });
+    },
+    [newFieldSetState]
+  );
 
   useWatch(newFieldSetState, watch);
 
@@ -46,14 +55,17 @@ const FieldSet: React.FC<FieldSetProps> = ({
     };
   }, []);
 
-  return (
-    <div className={className}>
-      <FieldSetContext.Provider value={subscribe}>
+  return useMemo(
+    () => (
+      <div className={className}>
         <CommonPropsContext.Provider value={commonProps}>
-          <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
+          <FieldSetContext.Provider value={subscribe}>
+            <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
+          </FieldSetContext.Provider>
         </CommonPropsContext.Provider>
-      </FieldSetContext.Provider>
-    </div>
+      </div>
+    ),
+    [newFieldSetState]
   );
 };
 
