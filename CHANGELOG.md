@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/uStudioCompany/formfish/compare/v0.6.1...v0.6.2) (2020-04-16)
+
+
+### Bug Fixes
+
+* **Field:** set default input value through setValue function ([3247e3f](https://github.com/uStudioCompany/formfish/commit/3247e3f2f3a6ec36ac8fd3baf4529b89a5b8c3ea))
+
 ### [0.6.1](https://github.com/uStudioCompany/formfish/compare/v0.6.0...v0.6.1) (2020-04-16)
 
 
