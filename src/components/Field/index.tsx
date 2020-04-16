@@ -31,7 +31,7 @@ const Field: React.FC<FieldProps> = ({
 
   const [renderedInput, setRenderedInput] = useState<ReactElement | undefined>(undefined);
   const [inputValue, setInputValue] = useState<unknown>(
-    fieldState?.value || input?.props?.[commonProps.getters.defaultValue]
+    commonProps.setValue(fieldState?.value || input?.props?.[commonProps.getters.defaultValue])
   );
   const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
 
