@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/uStudioCompany/formfish/compare/v0.6.0...v0.6.1) (2020-04-16)
+
+
+### Bug Fixes
+
+* Fix renderInput function, add more render optimizations ([cdab75a](https://github.com/uStudioCompany/formfish/commit/cdab75ae55ae4bf11d4844d77b1074a56b610bc3))
+
 ## [0.6.0](https://github.com/uStudioCompany/formfish/compare/v0.5.1...v0.6.0) (2020-04-15)
 
 
