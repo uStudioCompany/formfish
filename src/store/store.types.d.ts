@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 
-import { FormProps } from '../components/Form/Form.types';
+import { FormProps } from '../components/Form';
 import { FormAction } from './actions';
 
 export interface FormContextProviderProps {
@@ -11,7 +11,7 @@ export interface FormContextProviderProps {
 export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
-  getState<M extends FormMember = FormMember>(path: string): M;
+  getState(path: string): FormMember | FormState;
 }
 
 export type Field = Omit<unknown, FormFieldSet | FormFieldArray>;

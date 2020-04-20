@@ -1,11 +1,13 @@
 import React, { FormEvent, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 
-import FormContextProvider, { FormStateContext, FormState, FormStateContextValue } from '../../store';
+import FormContextProvider, { FormStateContext } from '../../store';
+import { FormState, FormStateContextValue } from '../../store/store.types';
 import PathContext from '../../context/path.context';
 import CommonPropsContext, { commonPropTypes } from '../../context/common-props.context';
 
 import { createFieldName } from '../../utils';
+import { cleanState } from './Form.module';
 import { FormProps } from './Form.types';
 
 const Form: React.FC<FormProps> = ({
@@ -35,9 +37,10 @@ const Form: React.FC<FormProps> = ({
 
   const handleSubmit = (state: FormState) => (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    const cleanedState = cleanState(state) as FormState;
 
-    if (handleValidate(state)) {
-      onSubmit(state);
+    if (handleValidate(cleanedState)) {
+      onSubmit(cleanedState);
     }
   };
 

@@ -7,7 +7,8 @@ import FieldSetContext from './FieldSet.context';
 
 import { usePath, commonPropTypes, useCommonProps } from '../../context';
 
-import { useFormContext, FormFieldSet, FormFieldArray } from '../../store';
+import { useFormContext } from '../../store';
+import { FormFieldSet, FormFieldArray } from '../../store/store.types';
 import { createFieldPath } from '../../utils';
 import { useWatch } from '../../hooks';
 import { FieldSetProps } from './FieldSet.types';
@@ -30,7 +31,7 @@ const FieldSet: React.FC<FieldSetProps> = ({
     () => createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator }),
     []
   );
-  const fieldSetState = getState<FormFieldSet | FormFieldArray>(fieldSetPath);
+  const fieldSetState = getState(fieldSetPath);
 
   const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
 
