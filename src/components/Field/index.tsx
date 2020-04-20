@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactElement, useEffect, useMemo, useState } from 'react';
+import React, { cloneElement, ReactElement, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
@@ -48,33 +48,22 @@ const Field: React.FC<FieldProps> = ({
     }
 
     if ((input || renderedInput) && isMounted) {
-      dispatch({
-        type: 'register',
-        payload: {
-          name,
-          path: fieldPath,
-          value: inputValue
-        }
-      });
+      dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
+
+      if (fieldState?.value !== inputValue) {
+        setNewFieldState({ ...fieldState, value: inputValue });
+      }
+
+      if (subscribe) {
+        subscribe();
+      }
     }
 
     return (): void => {
       setMounted(false);
       dispatch({ type: 'unregister', payload: { fieldPath } });
     };
-  }, [input, isMounted]);
-
-  useEffect(() => {
-    dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
-
-    if (fieldState?.value !== inputValue) {
-      setNewFieldState({ ...fieldState, value: inputValue });
-    }
-
-    if (subscribe) {
-      subscribe();
-    }
-  }, [inputValue]);
+  }, [input, isMounted, inputValue]);
 
   useWatch(newFieldState, watch);
 
