@@ -10,15 +10,14 @@ import { useWatch } from '../../hooks';
 import { FieldSetProps } from './FieldSet';
 
 const FieldSet: React.FC<FieldSetProps> = ({
-  children: fields,
+  children,
   name,
   watch,
   index,
   getValue,
   setValue,
   nameSeparator,
-  getters,
-  className = ''
+  getters
 }) => {
   const path = usePath();
   const { getState, dispatch } = useFormContext();
@@ -57,13 +56,11 @@ const FieldSet: React.FC<FieldSetProps> = ({
 
   return useMemo(
     () => (
-      <div className={className}>
-        <CommonPropsContext.Provider value={commonProps}>
-          <FieldSetContext.Provider value={subscribe}>
-            <PathContext.Provider value={fieldSetPath}>{fields}</PathContext.Provider>
-          </FieldSetContext.Provider>
-        </CommonPropsContext.Provider>
-      </div>
+      <CommonPropsContext.Provider value={commonProps}>
+        <FieldSetContext.Provider value={subscribe}>
+          <PathContext.Provider value={fieldSetPath}>{children}</PathContext.Provider>
+        </FieldSetContext.Provider>
+      </CommonPropsContext.Provider>
     ),
     [newFieldSetState]
   );
@@ -77,12 +74,7 @@ FieldSet.propTypes = {
     PropTypes.element.isRequired
   ]).isRequired,
   index: PropTypes.number,
-  className: PropTypes.string,
   ...commonPropTypes
-};
-
-FieldSet.defaultProps = {
-  className: ''
 };
 
 export default FieldSet;
