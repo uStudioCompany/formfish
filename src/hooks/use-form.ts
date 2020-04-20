@@ -1,5 +1,5 @@
-import { useFormContext } from '../context/form';
-import { FormStateContextValue } from '../context/form/FormContext';
+import { useFormContext } from '../store';
+import { FormStateContextValue } from '../store/store.types';
 
 /**
  * Public hook to use inside custom components in the Form.

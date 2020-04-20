@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Field from '../components/Field';
 import FieldSet from '../components/FieldSet';
 import Form from '../components/Form';
@@ -11,12 +11,22 @@ const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
 
+  const [ids, setIds] = useState([1, 2, 3, 4, 5]);
+
   return (
     <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
-      <FieldSet name="topmost-array">
-        <Field name="top-field">
-          <Input defaultValue="blabla" />
-        </Field>
+      <FieldSet name="fieldset">
+        {ids.map(id => (
+          <div key={id}>
+            <Field name={`top-field-${id}`}>
+              <Input defaultValue="blabla" />
+            </Field>
+
+            <button type="button" onClick={() => setIds(ids.filter(oldId => oldId !== id))}>
+              Remove {id}
+            </button>
+          </div>
+        ))}
       </FieldSet>
 
       <button type="submit">Submit</button>

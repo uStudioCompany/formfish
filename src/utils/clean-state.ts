@@ -1,9 +1,9 @@
-import { FieldArray, FieldSet, FormMember } from '../context/form/FormContext';
-import { isField } from './validators';
+import { FormFieldArray, FormFieldSet, FormMember } from '../store';
+import { isField, isFieldArray } from './validators';
 
-function cleanState(state: FieldSet | FieldArray): FormMember {
-  if (Array.isArray(state)) {
-    return state.reduce((array: FieldArray, member) => {
+function cleanState(state: FormFieldSet | FormFieldArray): FormMember {
+  if (isFieldArray(state)) {
+    return state.reduce((array: FormFieldArray, member) => {
       if (!member) {
         return array;
       }
@@ -20,7 +20,7 @@ function cleanState(state: FieldSet | FieldArray): FormMember {
     }, []);
   }
 
-  return Object.keys(state as FieldSet).reduce((set: FieldSet, key) => {
+  return Object.keys(state as FormFieldSet).reduce((set: FormFieldSet, key) => {
     const member = state[key];
 
     if (!member) {

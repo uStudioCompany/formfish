@@ -1,12 +1,13 @@
-import React, { cloneElement, ReactElement, useEffect, useState } from 'react';
+import React, { cloneElement, ReactElement, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useFormContext, usePath, commonPropTypes, useCommonProps } from '../../context';
-import { Field as FormField } from '../../context/form/FormContext';
+import { usePath, commonPropTypes, useCommonProps } from '../../context';
+import { useFormContext } from '../../store';
+
 import { useWatch } from '../../hooks';
 import { createFieldPath } from '../../utils';
-import { useFieldSetContext } from '../FieldSet/context';
-import { FieldProps } from './Field';
+import { useFieldSetContext } from '../FieldSet/FieldSet.context';
+import { FieldProps } from './Field.types';
 
 const Field: React.FC<FieldProps> = ({
   children: input,
@@ -24,20 +25,20 @@ const Field: React.FC<FieldProps> = ({
   const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-  const fieldPath = createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator });
-  const fieldState = getState(fieldPath) as FormField;
+  const fieldPath = useMemo(() => createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator }), []);
+  const fieldState = getState(fieldPath);
 
   const [isMounted, setMounted] = useState(false);
 
   const [renderedInput, setRenderedInput] = useState<ReactElement | undefined>(undefined);
   const [inputValue, setInputValue] = useState<unknown>(
-    commonProps.setValue(fieldState?.value || input?.props?.[commonProps.getters.defaultValue])
+    commonProps.setValue(fieldState || input?.props?.[commonProps.getters.defaultValue])
   );
-  const [newFieldState, setNewFieldState] = useState<FormField>(fieldState);
+  const [newFieldState, setNewFieldState] = useState(fieldState);
 
   useEffect(() => {
     if (renderedInput) {
-      setInputValue(fieldState?.value || renderedInput?.props?.[commonProps.getters.defaultValue]);
+      setInputValue(fieldState || renderedInput?.props?.[commonProps.getters.defaultValue]);
     }
   }, [renderedInput]);
 
@@ -48,22 +49,29 @@ const Field: React.FC<FieldProps> = ({
     }
 
     if ((input || renderedInput) && isMounted) {
-      dispatch({ type: 'register', payload: { name, path: fieldPath, value: inputValue } });
+      dispatch({ type: 'register', payload: { path: fieldPath, value: inputValue } });
 
-      if (fieldState?.value !== inputValue) {
-        setNewFieldState({ ...fieldState, value: inputValue });
-      }
-
-      if (subscribe) {
-        subscribe();
+      if (fieldState !== inputValue) {
+        setNewFieldState(fieldState);
       }
     }
 
     return (): void => {
       setMounted(false);
-      dispatch({ type: 'unregister', payload: { fieldPath } });
     };
   }, [input, isMounted, inputValue]);
+
+  useEffect(() => {
+    if (isMounted && subscribe) {
+      subscribe();
+    }
+  }, [isMounted, subscribe, inputValue]);
+
+  useEffect(() => {
+    return (): void => {
+      dispatch({ type: 'unregister', payload: { fieldPath, parentPath: path } });
+    };
+  }, []);
 
   useWatch(newFieldState, watch);
 
@@ -83,7 +91,7 @@ const Field: React.FC<FieldProps> = ({
   return cloneElement(input as ReactElement, {
     [commonProps.getters.value]: commonProps.setValue(inputValue),
     [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value)),
-    [commonProps.getters.id]: fieldState?.name
+    [commonProps.getters.id]: name
   });
 };
 

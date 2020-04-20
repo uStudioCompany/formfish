@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { FieldArray, FieldSet } from '../../context/form/FormContext';
+import { FormFieldArray, FormFieldSet } from '../../store/store.types';
 import { Watch } from '../../hooks/use-watch';
 import { CommonProps } from '../../types';
 
@@ -9,7 +9,7 @@ export interface FieldSetProps extends CommonProps {
    * If used as an array, should pass an index to any Field or FieldSet inside
    */
   children: ReactElement | ReactElement[];
-  watch?: Watch<FieldSet | FieldArray>;
+  watch?: Watch<FormFieldSet | FormFieldArray>;
   /**
    * Index to be accepted when used inside of an array
    */
