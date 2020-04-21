@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Field from '../components/Field';
 import FieldSet from '../components/FieldSet';
 import Form from '../components/Form';
@@ -11,36 +11,22 @@ const App: React.FC = () => {
   const handleSubmit = (formState: unknown) => console.log(formState);
   const watch = (value: unknown) => console.log(value);
 
-  return (
-    <Form
-      name="form"
-      nameSeparator="-"
-      onSubmit={handleSubmit}
-      getValue={(value: string) => encode(value)}
-      setValue={(value: string) => decode(value)}
-      initialState={{
-        form: {
-          topmostArray: {
-            topField: {
-              value: 'child'
-            }
-          }
-        }
-      }}
-    >
-      <FieldSet name="topmost-array">
-        <Field name="top-field">
-          <Input />
-        </Field>
-      </FieldSet>
+  const [ids, setIds] = useState([1, 2, 3, 4, 5]);
 
-      <FieldSet name="second">
-        <Field
-          name="inside-field"
-          renderInput={({ value = '', setValue }: { value: string; setValue: (value: string) => void }) => (
-            <Input value={value} onChange={inputValue => setValue(inputValue)} />
-          )}
-        />
+  return (
+    <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
+      <FieldSet name="fieldset">
+        {ids.map(id => (
+          <div key={id}>
+            <Field name={`top-field-${id}`}>
+              <Input defaultValue="blabla" />
+            </Field>
+
+            <button type="button" onClick={() => setIds(ids.filter(oldId => oldId !== id))}>
+              Remove {id}
+            </button>
+          </div>
+        ))}
       </FieldSet>
 
       <button type="submit">Submit</button>

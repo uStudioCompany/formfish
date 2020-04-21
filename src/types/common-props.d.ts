@@ -1,4 +1,3 @@
-import { Field } from '../context/form/FormContext';
 import { Watch } from '../hooks/use-watch';
 
 export interface CommonProps {
@@ -9,7 +8,7 @@ export interface CommonProps {
   /**
    * A method to access Field state at any time
    */
-  watch?: Watch<Field>;
+  watch?: Watch<unknown>;
   /**
    * A function that gets customized value from the input
    */

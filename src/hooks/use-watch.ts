@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { FormMember } from '../context/form/FormContext';
+import { FormMember } from '../store/store.types';
 
 export type Watch<T extends FormMember> = (state: T) => void;
 

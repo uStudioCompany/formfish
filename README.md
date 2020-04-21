@@ -69,9 +69,7 @@ to provide them with needed state. Use any level of depth - it won't break!
 
 If you'd like to somehow validate your form - use any method you find fit.
 `Form` component has a built-in method `onValidate` that accepts a special callback
-with "minified" state, that turns every field into a `name: value` pair inside of objects,
-or just `value` inside of arrays. Also, it optionally passes the state from the context
-as the second argument. **The same signature applies to `onSubmit`**.
+with form's state.
 
 Make sure to **throw an Error** when handling your validation as this will cause
 `onSubmit` to not be called if something goes wrong.
@@ -148,7 +146,7 @@ use on your input.
 
 **If you are using a native input, make sure to pass some default
 values to the callback functions, as otherwise it will
-throw a controlled/uncontrolled error.**
+throw a `controlled/uncontrolled input` error.**
 
 Also, note that `renderInput` is not affected by **Common customization
 props**.
