@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.6](https://github.com/uStudioCompany/formfish/compare/v0.6.5...v0.6.6) (2020-04-27)
+
+
+### Bug Fixes
+
+* **useForm:** change return order ([64eafeb](https://github.com/uStudioCompany/formfish/commit/64eafebb74a429ef8cd2b64c49c9db9d1c70a6f7))
+
 ### [0.6.5](https://github.com/uStudioCompany/formfish/compare/v0.6.4...v0.6.5) (2020-04-27)
 
 
