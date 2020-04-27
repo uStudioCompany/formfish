@@ -27,7 +27,6 @@
   "dependencies": {
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
-    "lodash.unset": "^4.5.2",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

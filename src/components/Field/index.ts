@@ -1,1 +1,2 @@
-export { default } from './Field.component';
+export { default } from './field.component';
+export * from './field.types';

@@ -1,1 +1,2 @@
-export { default } from './FieldSet.component';
+export { default } from './field-set.component';
+export * from './field-set.types';

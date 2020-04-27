@@ -7,8 +7,8 @@ import PathContext from '../../context/path.context';
 import CommonPropsContext, { commonPropTypes } from '../../context/common-props.context';
 
 import { createFieldName } from '../../utils';
-import { cleanState } from './Form.module';
-import { FormProps } from './Form.types';
+import { cleanState } from './form.module';
+import { FormProps } from './form.types';
 
 const Form: React.FC<FormProps> = ({
   children: form,

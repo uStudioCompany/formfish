@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import CommonPropsContext from '../../context/common-props.context';
 import PathContext from '../../context/path.context';
-import FieldSetContext from './FieldSet.context';
+import FieldSetContext from './field-set.context';
 
 import { usePath, commonPropTypes, useCommonProps } from '../../context';
 
@@ -11,7 +11,7 @@ import { useFormContext } from '../../store';
 import { FormFieldSet, FormFieldArray } from '../../store/store.types';
 import { createFieldPath } from '../../utils';
 import { useWatch } from '../../hooks';
-import { FieldSetProps } from './FieldSet.types';
+import { FieldSetProps } from './field-set.types';
 
 const FieldSet: React.FC<FieldSetProps> = ({
   children,
