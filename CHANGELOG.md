@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/uStudioCompany/formfish/compare/v0.6.2...v0.6.3) (2020-04-27)
+
+
+### Features
+
+* **FieldSet:** remove extra markup ([2fe29e0](https://github.com/uStudioCompany/formfish/commit/2fe29e043fba9a0e8eb209886a4c8b1566d8bb4c))
+
+
+### Bug Fixes
+
+* Fix type exports ([59c7b63](https://github.com/uStudioCompany/formfish/commit/59c7b63151b198a5483e741c5f0c796c6b5e0374))
+* Refactor file structure, fix FieldSet watch method, refactor types ([74c310c](https://github.com/uStudioCompany/formfish/commit/74c310c48c218470439c4233ddff845b5bb46d7b))
+
 ### [0.6.2](https://github.com/uStudioCompany/formfish/compare/v0.6.1...v0.6.2) (2020-04-16)
 
 
