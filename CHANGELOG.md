@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/uStudioCompany/formfish/compare/v0.6.3...v0.6.4) (2020-04-27)
+
+
+### Bug Fixes
+
+* add export type statements ([d662727](https://github.com/uStudioCompany/formfish/commit/d662727a40ad3abd0c09f649d8112964b5e65616))
+* Restore lost code ([5f94ea2](https://github.com/uStudioCompany/formfish/commit/5f94ea22508eb5eaa61a0fafbba236007cace8d6))
+* Update Field ([8e2d2ad](https://github.com/uStudioCompany/formfish/commit/8e2d2ad430a85c3016fda9c793f13ac4acc92a9f))
+
 ### [0.6.3](https://github.com/uStudioCompany/formfish/compare/v0.6.2...v0.6.3) (2020-04-27)
 
 
