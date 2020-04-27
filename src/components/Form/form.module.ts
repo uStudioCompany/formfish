@@ -1,7 +1,9 @@
-import { FormFieldArray, FormFieldSet, FormMember } from '../store';
-import { isField, isFieldArray } from './validators';
+import { Field, FormFieldArray, FormFieldSet, FormMember } from '../../store/store.types';
 
-function cleanState(state: FormFieldSet | FormFieldArray): FormMember {
+export const isField = (member: FormMember): member is Field => 'value' in member;
+export const isFieldArray = (member: FormMember): member is FormFieldArray => !isField(member) && Array.isArray(member);
+
+export const cleanState = (state: FormFieldSet | FormFieldArray): FormMember => {
   if (isFieldArray(state)) {
     return state.reduce((array: FormFieldArray, member) => {
       if (!member) {
@@ -37,6 +39,4 @@ function cleanState(state: FormFieldSet | FormFieldArray): FormMember {
 
     return Object.assign(set, { [key]: member });
   }, {});
-}
-
-export default cleanState;
+};
