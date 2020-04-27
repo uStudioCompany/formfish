@@ -1,2 +1,2 @@
 export { default } from './form.component';
-export * from './form.types';
+export type { FormProps } from './form.types';

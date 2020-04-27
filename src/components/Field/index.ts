@@ -1,2 +1,2 @@
 export { default } from './field.component';
-export * from './field.types';
+export type { FieldProps } from './field.types';

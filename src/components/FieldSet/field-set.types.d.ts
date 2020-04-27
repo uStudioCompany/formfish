@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { FormFieldArray, FormFieldSet } from '../../store/store.types';
+import { FormFieldArray, FormFieldSet } from '../..';
 import { Watch } from '../../hooks/use-watch';
 import { CommonProps } from '../../types';
 

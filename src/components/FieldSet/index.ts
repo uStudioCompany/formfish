@@ -1,2 +1,2 @@
 export { default } from './field-set.component';
-export * from './field-set.types';
+export type { FieldSetProps } from './field-set.types';
