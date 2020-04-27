@@ -7,6 +7,10 @@ import { FormStateContextValue } from '../store/store.types';
  *
  * @return getState function from form context
  */
-const useForm = (): FormStateContextValue['getState'] => useFormContext().getState;
+const useForm = (): FormStateContextValue['getState'] => {
+  const { getState } = useFormContext();
+
+  return getState;
+};
 
 export default useForm;
