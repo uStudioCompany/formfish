@@ -1,16 +1,16 @@
 import { Field, FormFieldArray, FormFieldSet, FormMember } from '../../store/store.types';
 
-export const isField = (member: FormMember): member is Field => 'value' in member;
-export const isFieldArray = (member: FormMember): member is FormFieldArray => !isField(member) && Array.isArray(member);
+export const isPrimitive = (member: FormMember): member is Field => member !== Object(member);
+export const isArray = (member: FormMember): member is FormFieldArray => !isPrimitive(member) && Array.isArray(member);
 
 export const cleanState = (state: FormFieldSet | FormFieldArray): FormMember => {
-  if (isFieldArray(state)) {
+  if (isArray(state)) {
     return state.reduce((array: FormFieldArray, member) => {
       if (!member) {
         return array;
       }
 
-      if (!isField(member)) {
+      if (!isPrimitive(member)) {
         if (Object.keys(cleanState(member)).length) {
           return [...array, member];
         }
@@ -29,7 +29,7 @@ export const cleanState = (state: FormFieldSet | FormFieldArray): FormMember => 
       return set;
     }
 
-    if (!isField(member)) {
+    if (!isPrimitive(member)) {
       if (Object.keys(cleanState(member)).length) {
         return Object.assign(set, { [key]: member });
       }
