@@ -32,13 +32,13 @@ const Field: React.FC<FieldProps> = ({
 
   const [renderedInput, setRenderedInput] = useState<ReactElement | undefined>(undefined);
   const [inputValue, setInputValue] = useState<unknown>(
-    commonProps.setValue(fieldState || input?.props?.[commonProps.getters.defaultValue])
+    commonProps.setValue(fieldState ?? input?.props?.[commonProps.getters.defaultValue])
   );
   const [newFieldState, setNewFieldState] = useState(fieldState);
 
   useEffect(() => {
     if (renderedInput) {
-      setInputValue(fieldState || renderedInput?.props?.[commonProps.getters.defaultValue]);
+      setInputValue(fieldState ?? renderedInput?.props?.[commonProps.getters.defaultValue]);
     }
   }, [renderedInput]);
 
@@ -78,7 +78,7 @@ const Field: React.FC<FieldProps> = ({
   if (renderInput) {
     const prerenderedInput = renderInput({
       value: inputValue,
-      setValue: value => setInputValue(value)
+      setValue: (value) => setInputValue(value)
     });
 
     if (!renderedInput) {
