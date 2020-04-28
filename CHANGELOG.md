@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.8](https://github.com/uStudioCompany/formfish/compare/v0.6.7...v0.6.8) (2020-04-28)
+
+
+### Bug Fixes
+
+* **Field:** fix field value setting and watch method ([11a7ed6](https://github.com/uStudioCompany/formfish/commit/11a7ed60fbd5aac01af140df353449d468d970d4))
+* **FieldSet:** fix watch prop type declaration ([3b189c1](https://github.com/uStudioCompany/formfish/commit/3b189c101822f26094b6972c52b42e7183021ae6))
+* **useWatch:** fix type declaration ([3b6eba1](https://github.com/uStudioCompany/formfish/commit/3b6eba1aba1768acf425c5caa0fa0207b169bdf9))
+
 ### [0.6.7](https://github.com/uStudioCompany/formfish/compare/v0.6.6...v0.6.7) (2020-04-28)
 
 
