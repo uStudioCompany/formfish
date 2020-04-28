@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.7](https://github.com/uStudioCompany/formfish/compare/v0.6.6...v0.6.7) (2020-04-28)
+
+
+### Bug Fixes
+
+* **Field:** fix setting a boolean/undefined value ([af70fda](https://github.com/uStudioCompany/formfish/commit/af70fda9a8777dd1fd6e57938f4a4299af7c1184))
+
 ### [0.6.6](https://github.com/uStudioCompany/formfish/compare/v0.6.5...v0.6.6) (2020-04-27)
 
 
