@@ -8,7 +8,7 @@ import FieldSetContext from './field-set.context';
 import { usePath, commonPropTypes, useCommonProps } from '../../context';
 
 import { useFormContext } from '../../store';
-import { FormFieldSet, FormFieldArray } from '../../store/store.types';
+import { FormFieldSet, FormFieldArray } from '../..';
 import { createFieldPath } from '../../utils';
 import { useWatch } from '../../hooks';
 import { FieldSetProps } from './field-set.types';

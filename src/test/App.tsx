@@ -36,8 +36,8 @@ const App: React.FC = () => {
 
   return (
     <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
-      <FieldSet name="fieldset">
-        <Field name="check" watch={watch}>
+      <FieldSet name="fieldset" watch={watch}>
+        <Field name="check">
           <Check defaultValue={false} />
         </Field>
       </FieldSet>
