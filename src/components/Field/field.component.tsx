@@ -34,7 +34,6 @@ const Field: React.FC<FieldProps> = ({
   const [inputValue, setInputValue] = useState<unknown>(
     commonProps.setValue(fieldState ?? input?.props?.[commonProps.getters.defaultValue])
   );
-  const [newFieldState, setNewFieldState] = useState(fieldState);
 
   useEffect(() => {
     if (renderedInput) {
@@ -45,15 +44,10 @@ const Field: React.FC<FieldProps> = ({
   useEffect(() => {
     if (input || renderedInput) {
       setMounted(true);
-      setNewFieldState(fieldState);
     }
 
     if ((input || renderedInput) && isMounted) {
       dispatch({ type: 'register', payload: { path: fieldPath, value: inputValue } });
-
-      if (fieldState !== inputValue) {
-        setNewFieldState(fieldState);
-      }
     }
 
     return (): void => {
@@ -73,7 +67,7 @@ const Field: React.FC<FieldProps> = ({
     };
   }, []);
 
-  useWatch(newFieldState, watch);
+  useWatch(inputValue, watch);
 
   if (renderInput) {
     const prerenderedInput = renderInput({
