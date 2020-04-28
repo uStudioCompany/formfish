@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { FormMember } from '..';
 
-export type Watch<T extends FormMember> = (state: T) => void;
+export type Watch<T> = (state: T) => void;
 
 /**
  * @internal
@@ -9,7 +8,7 @@ export type Watch<T extends FormMember> = (state: T) => void;
  *
  * @return Returns an object with state of a member from our context
  */
-const useWatch = <T extends FormMember>(state: T, watch?: Watch<T>): void => {
+const useWatch = <T>(state: T, watch?: Watch<T>): void => {
   useEffect(() => {
     if (watch) {
       watch(state);
