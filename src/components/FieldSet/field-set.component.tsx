@@ -23,7 +23,7 @@ const FieldSet: React.FC<FieldSetProps> = ({
   nameSeparator,
   getters
 }) => {
-  const path = usePath();
+  const path = usePath(name);
   const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 

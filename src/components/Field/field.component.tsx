@@ -20,7 +20,7 @@ const Field: React.FC<FieldProps> = ({
   getters,
   index
 }) => {
-  const path = usePath();
+  const path = usePath(name);
   const subscribe = useFieldSetContext();
   const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
