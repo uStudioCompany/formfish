@@ -1,7 +1,7 @@
-import { Dispatch } from 'react';
+import type { Dispatch } from 'react';
 
-import { FormProps } from '../components/Form';
-import { FormAction } from './actions';
+import type { FormProps } from '../components/Form';
+import type { FormAction } from './actions';
 
 export interface FormContextProviderProps {
   watch: FormProps['watch'];

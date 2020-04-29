@@ -1,6 +1,6 @@
-import { Watch } from '../../hooks/use-watch';
-import { FormState } from '../../store/store.types';
-import { CommonProps } from '../../types';
+import type { Watch } from '../../hooks/use-watch';
+import type { FormState } from '../..';
+import type { CommonProps } from '../../types';
 
 export interface FormProps extends CommonProps {
   /**

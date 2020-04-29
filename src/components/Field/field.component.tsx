@@ -7,7 +7,7 @@ import { useFormContext } from '../../store';
 import { useWatch } from '../../hooks';
 import { createFieldPath } from '../../utils';
 import { useFieldSetContext } from '../FieldSet/field-set.context';
-import { FieldProps } from './field.types';
+import type { FieldProps } from './field.types';
 
 const Field: React.FC<FieldProps> = ({
   children: input,

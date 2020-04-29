@@ -1,6 +1,6 @@
 import PropTypes, { InferProps } from 'prop-types';
 import { createContext, useContext } from 'react';
-import { CommonProps } from '../types';
+import type { CommonProps } from '../types';
 
 type CommonPropsContextValue = Pick<CommonProps, 'getValue' | 'setValue' | 'getters' | 'nameSeparator'>;
 

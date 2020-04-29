@@ -1,4 +1,4 @@
-import { Watch } from '../hooks/use-watch';
+import type { Watch } from '../hooks/use-watch';
 
 export interface CommonProps {
   /**

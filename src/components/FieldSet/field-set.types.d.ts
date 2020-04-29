@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
-import { Watch } from '../../hooks/use-watch';
-import { CommonProps } from '../../types';
+import type { ReactElement } from 'react';
+import type { Watch } from '../../hooks/use-watch';
+import type { CommonProps } from '../../types';
 
 export interface FieldSetProps extends CommonProps {
   /**

@@ -3,6 +3,7 @@ import Field from '../components/Field';
 import FieldSet from '../components/FieldSet';
 import Form from '../components/Form';
 import { Input } from './Input';
+import Checkbox from 'ustudio-ui/components/Checkbox';
 
 const encode = (value = '') => value;
 const decode = (value = '') => value;
@@ -36,10 +37,15 @@ const App: React.FC = () => {
 
   return (
     <Form name="form" nameSeparator="-" onSubmit={handleSubmit}>
-      <FieldSet name="fieldset" watch={watch}>
-        <Field name="check">
-          <Check defaultValue={false} />
-        </Field>
+      <FieldSet name="topmost">
+        <FieldSet name="top">
+          <FieldSet name="fieldset" watch={watch}>
+            <Field
+              name="check"
+              renderInput={({ value, setValue }) => <Checkbox value={value as boolean} onChange={setValue} />}
+            />
+          </FieldSet>
+        </FieldSet>
       </FieldSet>
 
       <button type="submit">Submit</button>

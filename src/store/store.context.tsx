@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
 import { useWatch } from '../hooks';
-import { FormStateContextValue, FormDispatchContextValue, FormContextProviderProps, FormState } from './store.types';
+import type {
+  FormStateContextValue,
+  FormDispatchContextValue,
+  FormContextProviderProps,
+  FormState
+} from './store.types';
 import formReducer from './reducer';
 
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);

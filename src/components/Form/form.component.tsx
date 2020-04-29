@@ -2,13 +2,13 @@ import React, { FormEvent, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 
 import FormContextProvider, { FormStateContext } from '../../store';
-import { FormState, FormStateContextValue } from '../../store/store.types';
+import type { FormState, FormStateContextValue } from '../../store/store.types';
 import PathContext from '../../context/path.context';
 import CommonPropsContext, { commonPropTypes } from '../../context/common-props.context';
 
 import { createFieldName } from '../../utils';
 import { cleanState } from './form.module';
-import { FormProps } from './form.types';
+import type { FormProps } from './form.types';
 
 const Form: React.FC<FormProps> = ({
   children: form,

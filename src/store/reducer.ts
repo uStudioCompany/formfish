@@ -1,8 +1,8 @@
 import get from 'lodash.get';
 import set from 'lodash.set';
 
-import { FormAction } from './actions';
-import { FormState } from './store.types';
+import type { FormAction } from './actions';
+import type { FormState } from './store.types';
 
 const formReducer = (state: FormState, action: FormAction): FormState => {
   switch (action.type) {
