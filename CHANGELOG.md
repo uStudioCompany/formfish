@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.10](https://github.com/uStudioCompany/formfish/compare/v0.6.9...v0.6.10) (2020-04-29)
+
+
+### Bug Fixes
+
+* make PathContext value update depend on the name ([3d57b4a](https://github.com/uStudioCompany/formfish/commit/3d57b4a90ca8c2f7402115c8176addefcc882cee))
+
 ### [0.6.9](https://github.com/uStudioCompany/formfish/compare/v0.6.8...v0.6.9) (2020-04-29)
 
 
