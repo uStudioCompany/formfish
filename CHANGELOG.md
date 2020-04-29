@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.9](https://github.com/uStudioCompany/formfish/compare/v0.6.8...v0.6.9) (2020-04-29)
+
+
+### Bug Fixes
+
+* **Form:** fix cleanState function ([b3011f6](https://github.com/uStudioCompany/formfish/commit/b3011f662296bc9a1c77aa9193f3ba719f4aee23))
+
 ### [0.6.8](https://github.com/uStudioCompany/formfish/compare/v0.6.7...v0.6.8) (2020-04-28)
 
 
