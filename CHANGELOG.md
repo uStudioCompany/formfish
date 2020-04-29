@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.11](https://github.com/uStudioCompany/formfish/compare/v0.6.10...v0.6.11) (2020-04-29)
+
+
+### Bug Fixes
+
+* add dependencies to memoized createFieldPath ([46d526f](https://github.com/uStudioCompany/formfish/commit/46d526fad717758044e518812238f753a547f1f7))
+
 ### [0.6.10](https://github.com/uStudioCompany/formfish/compare/v0.6.9...v0.6.10) (2020-04-29)
 
 
