@@ -27,10 +27,12 @@ const FieldSet: React.FC<FieldSetProps> = ({
   const { getState, dispatch } = useFormContext();
   const commonProps = useCommonProps({ getValue, setValue, nameSeparator, getters });
 
-  const fieldSetPath = useMemo(
-    () => createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator }),
-    []
-  );
+  const fieldSetPath = useMemo(() => createFieldPath({ path, name, index, nameSeparator: commonProps.nameSeparator }), [
+    path,
+    name,
+    index,
+    commonProps.nameSeparator
+  ]);
   const fieldSetState = getState(fieldSetPath);
 
   const [newFieldSetState, setNewFieldSetState] = useState(fieldSetState);
