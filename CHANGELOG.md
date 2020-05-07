@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.13](https://github.com/uStudioCompany/formfish/compare/v0.6.12...v0.6.13) (2020-05-07)
+
+
+### Bug Fixes
+
+* **Field:** compare children's props too ([3e4eab9](https://github.com/uStudioCompany/formfish/commit/3e4eab9685a7cc966070a4073842b37bf26c7f84))
+
 ### [0.6.12](https://github.com/uStudioCompany/formfish/compare/v0.6.11...v0.6.12) (2020-05-07)
 
 
