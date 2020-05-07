@@ -8,6 +8,7 @@ import CommonPropsContext, { commonPropTypes } from '../../context/common-props.
 
 import { createFieldName } from '../../utils';
 import { cleanState } from './form.module';
+
 import type { FormProps } from './form.types';
 
 const Form: React.FC<FormProps> = ({
@@ -64,6 +65,10 @@ const Form: React.FC<FormProps> = ({
 Form.displayName = 'Form';
 
 Form.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element.isRequired).isRequired,
+    PropTypes.element.isRequired
+  ]).isRequired,
   onSubmit: PropTypes.func.isRequired,
   onValidate: PropTypes.func,
   className: PropTypes.string,

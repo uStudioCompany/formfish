@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import { usePath, commonPropTypes, useCommonProps } from '../../context';
 import { useFormContext } from '../../store';
-
 import { useWatch } from '../../hooks';
 import { createFieldPath } from '../../utils';
 import { useFieldSetContext } from '../FieldSet/field-set.context';
+
+import { compareProps } from './field.module';
 import type { FieldProps } from './field.types';
 
 const Field: React.FC<FieldProps> = ({
@@ -58,7 +59,7 @@ const Field: React.FC<FieldProps> = ({
     return (): void => {
       setMounted(false);
     };
-  }, [input, isMounted, inputValue]);
+  }, [input, renderedInput, isMounted, inputValue]);
 
   useEffect(() => {
     if (isMounted && subscribe) {
@@ -87,11 +88,13 @@ const Field: React.FC<FieldProps> = ({
     return prerenderedInput;
   }
 
-  return cloneElement(input as ReactElement, {
-    [commonProps.getters.value]: commonProps.setValue(inputValue),
-    [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value)),
-    [commonProps.getters.id]: name
-  });
+  return useMemo(() => {
+    return cloneElement(input as ReactElement, {
+      [commonProps.getters.value]: commonProps.setValue(inputValue),
+      [commonProps.getters.event]: (value: unknown) => setInputValue(commonProps.getValue(value)),
+      [commonProps.getters.id]: name
+    });
+  }, [...Object.values(commonProps), ...Object.values(commonProps.getters), inputValue, name]);
 };
 
 Field.displayName = 'Field';
@@ -111,4 +114,4 @@ Field.defaultProps = {
   }
 };
 
-export default Field;
+export default React.memo(Field, compareProps) as React.FC<FieldProps>;

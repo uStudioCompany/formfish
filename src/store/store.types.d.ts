@@ -11,7 +11,7 @@ export interface FormContextProviderProps {
 export type FormDispatchContextValue = Dispatch<FormAction>;
 
 export interface FormStateContextValue {
-  getState(path: string): FormMember | FormState;
+  getState(path: string): unknown;
 }
 
 export type Field = Omit<unknown, FormFieldSet | FormFieldArray>;

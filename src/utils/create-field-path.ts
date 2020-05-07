@@ -1,4 +1,4 @@
-import createFieldName from './create-field-name';
+import { createFieldName } from './create-field-name';
 
 /**
  * @internal
@@ -12,7 +12,7 @@ import createFieldName from './create-field-name';
  * @return Returns a path with either an array index or dot-notation property
  * at the end of a string
  */
-const createFieldPath = ({
+export const createFieldPath = ({
   path,
   name,
   index,
@@ -25,5 +25,3 @@ const createFieldPath = ({
 }): string => {
   return typeof index === 'number' ? `${path}[${index}]` : `${path}.${createFieldName(name, nameSeparator)}`;
 };
-
-export default createFieldPath;

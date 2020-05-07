@@ -1,8 +1,10 @@
+import type { ReactElement } from 'react';
 import type { Watch } from '../../hooks/use-watch';
 import type { FormState } from '../..';
 import type { CommonProps } from '../../types';
 
 export interface FormProps extends CommonProps {
+  children: ReactElement | ReactElement[];
   /**
    * Callback invoked after submitting the Form
    */

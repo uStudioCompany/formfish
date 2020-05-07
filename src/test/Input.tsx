@@ -1,19 +1,24 @@
 import React from 'react';
+import { useForm } from '../hooks';
 
 export const Input = ({
   value,
   defaultValue,
   onChange
 }: {
-  value?: string;
-  defaultValue?: string;
-  onChange?: (value: string) => void;
+  value?: boolean;
+  defaultValue?: boolean;
+  onChange?: (value: boolean) => void;
 }) => {
+  const watch = useForm('form.topmost');
+
+  console.log(watch);
+
   return (
     <input
-      type="text"
-      value={value ?? defaultValue}
-      onChange={({ target: { value: inputValue } }) => onChange && onChange(inputValue)}
+      type="checkbox"
+      checked={value ?? defaultValue}
+      onChange={({ target: { checked: inputValue } }) => onChange && onChange(inputValue)}
     />
   );
 };

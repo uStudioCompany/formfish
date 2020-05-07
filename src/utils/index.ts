@@ -1,2 +1,2 @@
-export { default as createFieldName } from './create-field-name';
-export { default as createFieldPath } from './create-field-path';
+export * from './create-field-name';
+export * from './create-field-path';

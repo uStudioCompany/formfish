@@ -5,7 +5,7 @@
  * @param name Field name
  * @param separator Custom separator
  */
-const createFieldName = (name: string, separator: string): string => {
+export const createFieldName = (name: string, separator: string): string => {
   const splitName = name.split(separator);
 
   if (splitName.length === 1) {
@@ -19,5 +19,3 @@ const createFieldName = (name: string, separator: string): string => {
     .map(word => `${word[0].toUpperCase()}${word.slice(1)}`)
     .join('')}`;
 };
-
-export default createFieldName;

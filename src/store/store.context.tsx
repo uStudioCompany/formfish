@@ -1,14 +1,9 @@
-import React, { createContext, PropsWithChildren, useContext, useReducer } from 'react';
+import React, { createContext, PropsWithChildren, useContext, useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash.get';
 
 import { useWatch } from '../hooks';
-import type {
-  FormStateContextValue,
-  FormDispatchContextValue,
-  FormContextProviderProps,
-  FormState
-} from './store.types';
+import type { FormStateContextValue, FormDispatchContextValue, FormContextProviderProps } from './store.types';
 import formReducer from './reducer';
 
 export const FormStateContext = createContext<FormStateContextValue | undefined>(undefined);
@@ -26,7 +21,7 @@ const FormContextProvider: React.FC<PropsWithChildren<FormContextProviderProps>>
   return (
     <FormStateContext.Provider
       value={{
-        getState: (path: string): FormState => get(formState, path) as FormState
+        getState: (path: string): unknown => get(formState, path)
       }}
     >
       <FormDispatchContext.Provider value={dispatch}>{children}</FormDispatchContext.Provider>

@@ -1,5 +1,4 @@
 import { useFormContext } from '../store';
-import type { FormStateContextValue } from '../store/store.types';
 
 /**
  * Public hook to use inside custom components in the Form.
@@ -7,10 +6,10 @@ import type { FormStateContextValue } from '../store/store.types';
  *
  * @return getState function from form context
  */
-const useForm = (): FormStateContextValue['getState'] => {
+function useForm(path: string): unknown {
   const { getState } = useFormContext();
 
-  return getState;
+  return getState(path);
 };
 
 export default useForm;
