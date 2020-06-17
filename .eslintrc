@@ -12,6 +12,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript"
   ],
+  "plugins": ["react", "@typescript-eslint", "jest", "prettier"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -24,7 +25,6 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
   "ignorePatterns": ["lib/**/*", "node_modules/**/*"],
   "rules": {
     "prettier/prettier": "warn",

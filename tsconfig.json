@@ -16,6 +16,7 @@
     "declaration": true,
     "emitDeclarationOnly": true
   },
-  "exclude": ["node_modules", "lib"],
+  "types": ["jest"],
+  "exclude": ["lib"],
   "include": ["src"]
 }
