@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.15](https://github.com/uStudioCompany/formfish/compare/v0.6.14...v0.6.15) (2020-07-08)
+
+
+### Bug Fixes
+
+* **Field:** remove `React.memo` ([db24c07](https://github.com/uStudioCompany/formfish/commit/db24c070e06a331aaf99fcac6198394e99232586))
+
 ### [0.6.14](https://github.com/uStudioCompany/formfish/compare/v0.6.13...v0.6.14) (2020-05-07)
 
 
