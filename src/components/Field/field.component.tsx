@@ -7,7 +7,6 @@ import { useWatch } from '../../hooks';
 import { createFieldPath } from '../../utils';
 import { useFieldSetContext } from '../FieldSet/field-set.context';
 
-import { compareProps } from './field.module';
 import type { FieldProps } from './field.types';
 
 const Field: React.FC<FieldProps> = ({
@@ -114,4 +113,4 @@ Field.defaultProps = {
   }
 };
 
-export default React.memo(Field, compareProps) as React.FC<FieldProps>;
+export default Field;
